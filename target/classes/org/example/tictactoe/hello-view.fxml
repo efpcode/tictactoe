@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tictactoe.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <BorderPane>
+        <padding>
+            <Insets bottom="80.0" left="20.0" right="20.0" top="80.0" />
+        </padding>
+
+        <top>
+            <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+                <padding>
+                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                </padding>
+                <Label text="Top" />
+            </HBox>
+        </top>
+        <left>
+            <VBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER_LEFT">
+                <padding>
+                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                </padding>
+
+                <Label text="O" />
+                <Label text="Score: O" />
+                <Button text="Select" />
+
+            </VBox>
+        </left>
+        <right>
+            <VBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER_LEFT">
+                <padding>
+                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                </padding>
+
+                <Label text="O" />
+                <Label text="Score: O" />
+                <Button text="Select" />
+
+            </VBox>
+        </right>
+        <center>
+            <GridPane hgap="15" vgap="15" BorderPane.alignment="CENTER">
+
+                <ImageView GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <Image url="@images/robot.png" />
+                </ImageView>
+
+                <ImageView GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <Image url="@images/robot.png" />
+                </ImageView>
+
+                <ImageView GridPane.columnIndex="2" GridPane.rowIndex="0">
+                    <Image url="@images/robot.png" />
+                </ImageView>
+
+                <ImageView GridPane.columnIndex="0" GridPane.rowIndex="1">
+                    <Image url="@images/robot.png" />
+                </ImageView>
+
+                <ImageView GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <Image url="@images/robot.png" />
+                </ImageView>
+
+                <ImageView GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <Image url="@images/robot.png" />
+                </ImageView>
+
+                <ImageView GridPane.columnIndex="0" GridPane.rowIndex="2">
+                    <Image url="@images/robot.png" />
+                </ImageView>
+
+                <ImageView GridPane.columnIndex="0" GridPane.rowIndex="2">
+                <Image url="@images/robot.png" />
+                </ImageView>
+
+                <ImageView GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <Image url="@images/robot.png" />
+                </ImageView>
+
+                <ImageView GridPane.columnIndex="2" GridPane.rowIndex="2">
+                    <Image url="@images/robot.png" />
+                </ImageView>
+                <columnConstraints>
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
+                </rowConstraints>
+
+            </GridPane>
+        </center>
+        <bottom>
+            <HBox alignment="CENTER" BorderPane.alignment="BOTTOM_CENTER">
+                <padding>
+                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                </padding>
+                <TilePane hgap="100" BorderPane.alignment="BOTTOM_CENTER">
+                    <Button translateX="180.0" text="Start" />
+                    <Button translateX="180.0" text="Quit" />
+                </TilePane>
+            </HBox>
+        </bottom>
+    </BorderPane>
+</Pane>
