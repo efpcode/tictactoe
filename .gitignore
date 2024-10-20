@@ -148,4 +148,10 @@ Temporary Items
 # iCloud generated files
 *.icloud
 
+
+## Ignore Images
+images/*
+
+
+
 # End of https://www.toptal.com/developers/gitignore/api/java,macos,intellij+all
