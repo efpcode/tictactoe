@@ -151,6 +151,7 @@ Temporary Items
 
 ## Ignore Images
 **/images/*
+**/images/
 **/images
 
 
