@@ -150,7 +150,9 @@ Temporary Items
 
 
 ## Ignore Images
-images/*
+**/images/*
+target/classes/images
+target/classes/images/*
 
 
 
