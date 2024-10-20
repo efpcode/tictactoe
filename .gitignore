@@ -150,7 +150,7 @@ Temporary Items
 
 
 ## Ignore Images
-main/resources/images/*
+images/*
 
 
 
