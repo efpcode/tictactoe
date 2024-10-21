@@ -3,10 +3,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tictactoe.GameMenuController">
+<HBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tictactoe.view.controllers.GameMenuController">
     <VBox alignment="CENTER" spacing="40">
-        <Label text="Welcome To TicTacToe" />
-            <Button text="Player Vs Player" />
+        <Label id="menuTitle" text="Welcome To TicTacToe" />
+            <Button text="Player Vs Player" onMouseClicked="#gamePVsP"/>
             <Button text="Player Vs Computer" />
             <Button text="Play Online" />
             <Button text="Quit" onMouseClicked="#gameQuit"/>

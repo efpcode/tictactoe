@@ -1,4 +1,4 @@
-package org.example.tictactoe;
+package org.example.tictactoe.view.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

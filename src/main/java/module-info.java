@@ -5,4 +5,6 @@ module org.example.tictactoe {
 
     opens org.example.tictactoe to javafx.fxml;
     exports org.example.tictactoe;
+    exports org.example.tictactoe.view.controllers;
+    opens org.example.tictactoe.view.controllers to javafx.fxml;
 }
