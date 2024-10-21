@@ -9,7 +9,4 @@ public class GameMainController {
     public GameMenuController getGameMenuController() {
         return gameMenuController;
     }
-    public GamePlayController getGamePlayController() {
-        var menuController = getGameMenuController();
-    }
 }
