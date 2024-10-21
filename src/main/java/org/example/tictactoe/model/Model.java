@@ -1,8 +1,4 @@
 package org.example.tictactoe.model;
-import org.example.tictactoe.GameApplication;
-import org.example.tictactoe.view.controllers.GameController;
-
-import static org.example.tictactoe.model.BoardState.*;
 
 public class Model {
 

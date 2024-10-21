@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tictactoe.view.controllers.GameController">
+<Pane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tictactoe.view.controllers.GamePlayController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -50,43 +50,43 @@
             <GridPane hgap="15" vgap="15" BorderPane.alignment="CENTER">
 
                 <ImageView GridPane.columnIndex="0" GridPane.rowIndex="0">
-                    <Image url="@images/robot.png" />
+                    <Image url="@../images/robot.png" />
                 </ImageView>
 
                 <ImageView GridPane.columnIndex="1" GridPane.rowIndex="0">
-                    <Image url="@images/robot.png" />
+                    <Image url="@../images/robot.png" />
                 </ImageView>
 
                 <ImageView GridPane.columnIndex="2" GridPane.rowIndex="0">
-                    <Image url="@images/robot.png" />
+                    <Image url="@../images/robot.png" />
                 </ImageView>
 
                 <ImageView GridPane.columnIndex="0" GridPane.rowIndex="1">
-                    <Image url="@images/robot.png" />
+                    <Image url="@../images/robot.png" />
                 </ImageView>
 
                 <ImageView GridPane.columnIndex="1" GridPane.rowIndex="1">
-                    <Image url="@images/robot.png" />
+                    <Image url="@../images/robot.png" />
                 </ImageView>
 
                 <ImageView GridPane.columnIndex="2" GridPane.rowIndex="1">
-                    <Image url="@images/robot.png" />
+                    <Image url="@../images/robot.png" />
                 </ImageView>
 
                 <ImageView GridPane.columnIndex="0" GridPane.rowIndex="2">
-                    <Image url="@images/robot.png" />
+                    <Image url="@../images/robot.png" />
                 </ImageView>
 
                 <ImageView GridPane.columnIndex="0" GridPane.rowIndex="2">
-                <Image url="@images/robot.png" />
+                <Image url="@../images/robot.png" />
                 </ImageView>
 
                 <ImageView GridPane.columnIndex="1" GridPane.rowIndex="2">
-                    <Image url="@images/robot.png" />
+                    <Image url="@../images/robot.png" />
                 </ImageView>
 
                 <ImageView GridPane.columnIndex="2" GridPane.rowIndex="2">
-                    <Image url="@images/robot.png" />
+                    <Image url="@../images/robot.png" />
                 </ImageView>
                 <columnConstraints>
                     <ColumnConstraints />

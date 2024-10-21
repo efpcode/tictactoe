@@ -14,12 +14,12 @@ public class GameApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        FXMLLoader gameMenu = new FXMLLoader(GameApplication.class.getResource("game-menu-view.fxml"));
+        FXMLLoader gameMenu = new FXMLLoader(GameApplication.class.getResource("fxml/GameMenu.fxml"));
         Parent root = gameMenu.load();
         Scene menuScene = new Scene(root, width, height);
 
 
-        FXMLLoader gameView = new FXMLLoader(GameApplication.class.getResource("game-view.fxml"));
+        FXMLLoader gameView = new FXMLLoader(GameApplication.class.getResource("fxml/GamePlay.fxml"));
         Parent view = gameView.load();
         Scene gameScene = new Scene(view, width, height);
 
