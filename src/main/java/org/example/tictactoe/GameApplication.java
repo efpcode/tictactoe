@@ -5,12 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.example.tictactoe.model.Sceneable;
 
 import java.io.IOException;
 
-public class GameApplication extends Application {
+public class GameApplication extends Application implements Sceneable {
     final int width = 960;
     final int height = 1440;
+    private Stage scene;
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -29,7 +31,14 @@ public class GameApplication extends Application {
         stage.show();
     }
 
+    @Override
+    public Stage getScene() {
+        return this.scene;
+    }
 
+    public void setScene(Stage stage) {
+        this.scene = stage;
+    }
 
     public static void main(String[] args) {
         launch();
