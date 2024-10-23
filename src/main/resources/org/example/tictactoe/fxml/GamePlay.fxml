@@ -5,22 +5,28 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tictactoe.view.controllers.GamePlayController">
+<Pane xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tictactoe.view.controllers.GamePlayController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-    <BorderPane>
+    <BorderPane layoutX="-7.0">
         <padding>
             <Insets bottom="80.0" left="20.0" right="20.0" top="80.0" />
         </padding>
 
         <top>
-            <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+            <VBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+                <TilePane>
+                    <Button fx:id="goBackToMenu" alignment="TOP_LEFT" onMouseClicked="#getGoBackToMenu" text="Back To Game Menu" BorderPane.alignment="TOP_LEFT" />
+                </TilePane>
+
+                <TilePane alignment="TOP_CENTER" BorderPane.alignment="TOP_CENTER">
+                    <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" text="Top" />
+                </TilePane>
                 <padding>
                     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                 </padding>
-                <Label text="Top" />
-            </HBox>
+            </VBox>
         </top>
         <left>
             <VBox alignment="CENTER_LEFT" BorderPane.alignment="CENTER_LEFT">
@@ -47,18 +53,18 @@
             </VBox>
         </right>
         <center>
-            <GridPane hgap="15" vgap="15" BorderPane.alignment="CENTER">
+            <GridPane hgap="15" vgap="15" BorderPane.alignment="CENTER" scaleX="0.75" scaleY="0.75">
 
                 <ImageView GridPane.columnIndex="0" GridPane.rowIndex="0">
                     <Image url="@../images/robot.png" />
                 </ImageView>
 
                 <ImageView GridPane.columnIndex="1" GridPane.rowIndex="0">
-                    <Image url="@../images/robot.png" />
+                    <Image url="@../images/circle.png" />
                 </ImageView>
 
                 <ImageView GridPane.columnIndex="2" GridPane.rowIndex="0">
-                    <Image url="@../images/robot.png" />
+                    <Image url="@../images/cross.png" />
                 </ImageView>
 
                 <ImageView GridPane.columnIndex="0" GridPane.rowIndex="1">
@@ -107,8 +113,8 @@
                     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                 </padding>
                 <TilePane hgap="100" BorderPane.alignment="BOTTOM_CENTER">
-                    <Button translateX="180.0" text="Start" />
-                    <Button translateX="180.0" text="Quit" />
+                    <Button text="Start" translateX="180.0" />
+                    <Button text="Quit" translateX="180.0" />
                 </TilePane>
             </HBox>
         </bottom>

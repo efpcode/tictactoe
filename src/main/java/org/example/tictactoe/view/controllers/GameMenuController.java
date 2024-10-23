@@ -24,6 +24,7 @@ public class GameMenuController extends ChangeLayout{
 
     public void gamePVsP(MouseEvent mouseEvent) {
         model.changeScene(PLAYER_VS_PLAYER);
+        getView().switchScene("fxml/GamePlay.fxml");
     }
 
 
