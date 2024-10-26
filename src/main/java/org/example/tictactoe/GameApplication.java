@@ -5,14 +5,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.example.tictactoe.model.BoardState;
 import org.example.tictactoe.model.ChangeLayout;
 
 import java.io.IOException;
+
+import static org.example.tictactoe.model.BoardState.*;
 
 public class GameApplication extends Application {
     final int width = 960;
     final int height = 1440;
     private Stage scene;
+    private BoardState boardState = UNSET;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -24,7 +28,8 @@ public class GameApplication extends Application {
         stage.show();
     }
 
-     public void switchScene(String fxmlPath) {
+
+    public void switchScene(String fxmlPath) {
 
          try {
              FXMLLoader gameView = new FXMLLoader(GameApplication.class.getResource(fxmlPath));
@@ -37,7 +42,17 @@ public class GameApplication extends Application {
          }
 
 
+
      }
+
+    public void setBoardState(BoardState boardState) {
+        this.boardState = boardState;
+    }
+
+    public BoardState getBoardState() {
+        return boardState;
+    }
+
 
     public static void main(String[] args) {
         launch();
