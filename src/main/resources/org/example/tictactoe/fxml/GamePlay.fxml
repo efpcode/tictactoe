@@ -37,16 +37,16 @@
             </VBox>
         </top>
         <left>
-            <VBox alignment="CENTER_RIGHT" maxWidth="200.0" style="-fx-border-color: blue;" BorderPane.alignment="CENTER_RIGHT">
+            <VBox fx:id="leftPane" alignment="CENTER_RIGHT" maxWidth="200.0" style="-fx-border-color: blue;" BorderPane.alignment="CENTER_RIGHT">
 
 
                 <Label styleClass="playerToken" text="o" />
                 <Label styleClass="scoreStyle" text="Score: O" />
-                <Button alignment="CENTER" contentDisplay="CENTER" styleClass="playerSelectButton" text="Select" />
+                <Button fx:id="leftButton" alignment="CENTER" contentDisplay="CENTER" styleClass="playerSelectButton" text="Select" />
             </VBox>
         </left>
         <right>
-            <VBox alignment="CENTER_LEFT" maxWidth="200.0" minWidth="100.0" style="-fx-border-color: magenta;" BorderPane.alignment="CENTER_LEFT">
+            <VBox fx:id="rightPane" alignment="CENTER_LEFT" maxWidth="200.0" minWidth="100.0" style="-fx-border-color: magenta;" BorderPane.alignment="CENTER_LEFT">
 
 
                 <Label styleClass="playerToken" text="x" />
@@ -56,7 +56,7 @@
             </VBox>
         </right>
         <center>
-            <GridPane id="gameBoard" alignment="CENTER" hgap="45.0" maxWidth="700.0" prefHeight="996.0" prefWidth="400.0" scaleX="0.62" scaleY="0.62" style="-fx-border-color: green;" stylesheets="@../css/gamePlay.css" vgap="45.0" BorderPane.alignment="CENTER">
+            <GridPane fx:id="centerPane" id="cssCenterPane" alignment="CENTER" hgap="45.0" maxWidth="700.0" prefHeight="996.0" prefWidth="400.0" scaleX="0.62" scaleY="0.62" style="-fx-border-color: green;" stylesheets="@../css/gamePlay.css" vgap="45.0" BorderPane.alignment="CENTER">
 
                 <ImageView nodeOrientation="INHERIT" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                     <Image url="@../images/robot.png" />
