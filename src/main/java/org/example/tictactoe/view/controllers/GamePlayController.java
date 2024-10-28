@@ -19,9 +19,12 @@ public class GamePlayController extends ChangeLayout {
 
 
     public void getGoBackToMenu() {
-        System.out.println(getView().getBoardState());
-        getView().switchScene("fxml/GameMenu.fxml");
+        getView().switchScene("fxml/GameMenu.fxml", "css/gameMenu.css");
         getView().setBoardState(BoardState.UNSET);
-        System.out.println(getView().getBoardState());
+    }
+
+    public void quitGame() {
+        System.exit(0);
+
     }
 }

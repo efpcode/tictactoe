@@ -3,13 +3,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="CENTER" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tictactoe.view.controllers.GameMenuController">
+<HBox stylesheets="@../css/gameMenu.css" alignment="CENTER" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tictactoe.view.controllers.GameMenuController">
     <VBox alignment="CENTER" spacing="40">
         <Label id="menuTitle" text="Welcome To TicTacToe" />
-            <Button fx:id="PvP" text="Player Vs Player" onMouseClicked="#gamePVP"/>
-            <Button text="Player Vs Computer" />
-            <Button text="Play Online" />
-            <Button text="Quit" onMouseClicked="#gameQuit"/>
+            <Button styleClass="menuButtons" id="PvP" text="Player Vs Player" onMouseClicked="#gamePVP"/>
+            <Button styleClass="menuButtons" id="PvCPU" text="Player Vs Computer" onMouseClicked="#gamePVNPC" />
+            <Button styleClass="menuButtons" id="GameOnline" text="Play Online" onMouseClicked="#gameOnline" />
+            <Button styleClass="menuButtons" id="Quit" text="Quit" onMouseClicked="#gameQuit"/>
     </VBox>
 
 </HBox>

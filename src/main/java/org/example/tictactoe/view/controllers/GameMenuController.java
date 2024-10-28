@@ -15,12 +15,19 @@ public class GameMenuController extends ChangeLayout{
     }
 
     public void gamePVP(MouseEvent mouseEvent) {
-        System.out.println(getView().getBoardState());
-        getView().switchScene("fxml/GamePlay.fxml");
+        getView().switchScene("fxml/GamePlay.fxml", "css/gamePlay.css");
         getView().setBoardState(PLAYER_VS_PLAYER);
-        System.out.println(getView().getBoardState());
 
     }
 
 
+    public void gamePVNPC(MouseEvent mouseEvent) {
+        getView().switchScene("fxml/GamePlay.fxml", "css/gamePlay.css");
+        getView().setBoardState(PLAYER_VS_COMPUTER);
+    }
+
+    public void gameOnline(MouseEvent mouseEvent) {
+        getView().switchScene("fxml/GamePlay.fxml","css/gamePlay.css");
+        getView().setBoardState(ONLINE_PLAY);
+    }
 }

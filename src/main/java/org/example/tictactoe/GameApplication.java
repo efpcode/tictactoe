@@ -14,7 +14,7 @@ import static org.example.tictactoe.model.BoardState.*;
 
 public class GameApplication extends Application {
     final int width = 960;
-    final int height = 1440;
+    final int height = 960;
     private Stage scene;
     private BoardState boardState = UNSET;
 
@@ -22,14 +22,14 @@ public class GameApplication extends Application {
     public void start(Stage stage) throws IOException {
         scene = stage;
 
-        switchScene("fxml/GameMenu.fxml");
+        switchScene("fxml/GameMenu.fxml", "css/gameMenu.css");
 
         stage.setTitle("Welcome to TicTacToe!");
         stage.show();
     }
 
 
-    public void switchScene(String fxmlPath) {
+    public void switchScene(String fxmlPath, String cssPath) {
 
          try {
              FXMLLoader gameView = new FXMLLoader(GameApplication.class.getResource(fxmlPath));
@@ -37,6 +37,7 @@ public class GameApplication extends Application {
              ChangeLayout controller = gameView.getController();
              controller.setView(this);
              scene.setScene(new Scene(view, width, height));
+             scene.getScene().getStylesheets().add(getClass().getResource(cssPath).toExternalForm());
          } catch (IOException e) {
              e.printStackTrace();
          }
