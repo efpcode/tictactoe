@@ -5,7 +5,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane  xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tictactoe.view.controllers.GamePlayController">
+<Pane stylesheets="@../css/gamePlay.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tictactoe.view.controllers.GamePlayController">
 
     <BorderPane layoutX="-7.0" layoutY="7.0" maxHeight="960.0" maxWidth="960.0" minHeight="800.0" minWidth="800.0">
         <padding>
@@ -14,14 +14,18 @@
 
         <top>
             <VBox alignment="TOP_CENTER" maxHeight="180.0" minHeight="150.0" style="-fx-border-color: red;" stylesheets="@../css/gamePlay.css" BorderPane.alignment="CENTER">
+                <Label id="menuTitle" text="Welcome To TicTacToe" />
                 <TilePane>
-                    <Button id="goBackToMenu" alignment="TOP_LEFT" onMouseClicked="#getGoBackToMenu" styleClass="menuButtonsPlay" text="Back To Game Menu" BorderPane.alignment="TOP_LEFT" />
+                    <Button id="Quit" alignment="TOP_LEFT" onMouseClicked="#quitGame" styleClass="menuButtons" text="Quit" BorderPane.alignment="TOP_LEFT" />
+                    <Button id="PvP" alignment="TOP_CENTER" onMouseClicked="#gamePVP" styleClass="menuButtons" text="Player Vs Player" BorderPane.alignment="TOP_CENTER" />
+                    <Button id="PvCPU" alignment="TOP_CENTER" onMouseClicked="#gamePVNPC" styleClass="menuButtons" text="Player Vs Computer" BorderPane.alignment="TOP_CENTER" />
+                    <Button id="GameOnline" alignment="TOP_RIGHT" onMouseClicked="#gameOnline" styleClass="menuButtons" text="Play Online" BorderPane.alignment="TOP_RIGHT" />
                 </TilePane>
 
                 <TilePane alignment="TOP_CENTER" BorderPane.alignment="TOP_CENTER">
-                    <Label alignment="TOP_RIGHT" contentDisplay="RIGHT" styleClass="roundDisplay" text="Round 0">
+                    <Label alignment="TOP_CENTER" styleClass="roundDisplay" text="Round 0">
                   <TilePane.margin>
-                     <Insets bottom="50.0" top="50.0" />
+                     <Insets />
                   </TilePane.margin></Label>
                <opaqueInsets>
                   <Insets />
@@ -47,7 +51,7 @@
 
                 <Label styleClass="playerToken" text="x" />
                 <Label styleClass="scoreStyle" text="Score: O" />
-                <Button fx:id="rightButton" alignment="CENTER" contentDisplay="CENTER" styleClass="playerSelectButton" text="Select"/>
+                <Button fx:id="rightButton" alignment="CENTER" contentDisplay="CENTER" styleClass="playerSelectButton" text="Select" />
 
             </VBox>
         </right>
@@ -111,13 +115,10 @@
             </GridPane>
         </center>
         <bottom>
-            <HBox alignment="CENTER" style="-fx-border-color: black;" BorderPane.alignment="BOTTOM_CENTER">
-                <padding>
-                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                </padding>
-                <TilePane alignment="CENTER_LEFT" focusTraversable="true" hgap="100" BorderPane.alignment="BOTTOM_CENTER">
-                    <Button text="Start" translateX="180.0" styleClass="menuButtonsPlay"/>
-                    <Button text="Quit Game" translateX="180.0" styleClass="menuButtonsPlay" onMouseClicked="#quitGame"/>
+            <HBox alignment="CENTER" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
+                
+                <TilePane alignment="CENTER" focusTraversable="true" BorderPane.alignment="CENTER">
+                    <Button styleClass="menuButtons" text="Start" />
                 </TilePane>
             </HBox>
         </bottom>

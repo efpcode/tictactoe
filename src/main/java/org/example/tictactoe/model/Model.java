@@ -13,12 +13,5 @@ public class Model {
 
 
 
-    public void disableRightButton(Button button, BoardState boardState) {
-        switch (boardState){
-            case PLAYER_VS_COMPUTER, ONLINE_PLAY -> button.setDisable(true);
-            case PLAYER_VS_PLAYER, UNSET -> button.setDisable(false);
 
-
-        }
     }
-}
