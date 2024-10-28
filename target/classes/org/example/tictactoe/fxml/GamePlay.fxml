@@ -4,9 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<Pane stylesheets="@../css/gamePlay.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tictactoe.view.controllers.GamePlayController">
+<Pane  xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tictactoe.view.controllers.GamePlayController">
 
     <BorderPane layoutX="-7.0" layoutY="7.0" maxHeight="960.0" maxWidth="960.0" minHeight="800.0" minWidth="800.0">
         <padding>
@@ -48,7 +47,7 @@
 
                 <Label styleClass="playerToken" text="x" />
                 <Label styleClass="scoreStyle" text="Score: O" />
-                <Button alignment="CENTER" contentDisplay="CENTER" styleClass="playerSelectButton" text="Select"/>
+                <Button fx:id="rightButton" alignment="CENTER" contentDisplay="CENTER" styleClass="playerSelectButton" text="Select"/>
 
             </VBox>
         </right>

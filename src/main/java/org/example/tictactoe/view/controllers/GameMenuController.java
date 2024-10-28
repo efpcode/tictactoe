@@ -1,5 +1,6 @@
 package org.example.tictactoe.view.controllers;
 
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import org.example.tictactoe.model.ChangeLayout;
 
@@ -7,7 +8,6 @@ import static org.example.tictactoe.model.BoardState.*;
 
 
 public class GameMenuController extends ChangeLayout{
-
 
 
     public void gameQuit(MouseEvent mouseEvent) {
