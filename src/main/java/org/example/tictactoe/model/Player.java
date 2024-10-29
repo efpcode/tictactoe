@@ -8,10 +8,11 @@ public record Player(Matrix2dPositions position, PlayerToken token) {
         if (step == 0){
             return position().row() + step + position().column();
         }
-        return (int) Math.pow(step, position().row() ) + position().column();
+        return (int) Math.pow(step, position().row() ) + position().column()+position().row();
 
     }
 
-}
 
-record Matrix2dPositions(int row, int column){}
+
+
+}
