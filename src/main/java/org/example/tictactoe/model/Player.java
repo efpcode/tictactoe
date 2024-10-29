@@ -12,7 +12,4 @@ public record Player(Matrix2dPositions position, PlayerToken token) {
 
     }
 
-
-
-
 }
