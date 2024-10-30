@@ -24,7 +24,11 @@ public class GamePlayController  {
     @FXML private GridPane centerPane;
     private final List<Node> nodes = new ArrayList<>();
 
-    Model model = new Model();
+    private Model model = new Model();
+
+    public Model getModel() {
+        return model;
+    }
 
     public void initialize() {
         nodes.add(rightPane);
@@ -60,6 +64,10 @@ public class GamePlayController  {
     }
 
     public void playerSelectedLeft(MouseEvent mouseEvent) {
-        model.playerSelected(mouseEvent);
+        model.playerLeftSelected(mouseEvent);
+    }
+
+    public void playerSelectedRight(MouseEvent mouseEvent) {
+        model.playerRightSelected(mouseEvent);
     }
 }

@@ -41,7 +41,7 @@
 
 
                 <Label styleClass="playerToken" text="o" />
-                <Label styleClass="scoreStyle" text="Score: O" />
+                <Label styleClass="scoreStyle" text="${controller.model.pointsCircle}"/>
                 <Button fx:id="leftButton" alignment="CENTER" contentDisplay="CENTER" styleClass="playerSelectButton" text="Select" onMouseClicked="#playerSelectedLeft" />
             </VBox>
         </left>
@@ -50,8 +50,8 @@
 
 
                 <Label styleClass="playerToken" text="x" />
-                <Label styleClass="scoreStyle" text="Score: O" />
-                <Button fx:id="rightButton" alignment="CENTER" contentDisplay="CENTER" styleClass="playerSelectButton" text="Select" />
+                <Label styleClass="scoreStyle" text="${controller.model.pointsCross}" />
+                <Button fx:id="rightButton" alignment="CENTER" contentDisplay="CENTER" styleClass="playerSelectButton" text="Select" onMouseClicked="#playerSelectedRight" />
 
             </VBox>
         </right>
