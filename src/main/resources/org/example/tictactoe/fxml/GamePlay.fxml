@@ -42,7 +42,7 @@
 
                 <Label styleClass="playerToken" text="o" />
                 <Label styleClass="scoreStyle" text="Score: O" />
-                <Button fx:id="leftButton" alignment="CENTER" contentDisplay="CENTER" styleClass="playerSelectButton" text="Select" />
+                <Button fx:id="leftButton" alignment="CENTER" contentDisplay="CENTER" styleClass="playerSelectButton" text="Select" onMouseClicked="#playerSelectedLeft" />
             </VBox>
         </left>
         <right>

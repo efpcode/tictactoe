@@ -1,7 +1,11 @@
 package org.example.tictactoe.model;
 
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 
 import java.util.List;
 
@@ -48,4 +52,14 @@ public class Model {
     }
 
 
+    public void playerSelected(MouseEvent mouseEvent) {
+        Button button = (Button) mouseEvent.getSource();
+        String buttonText = button.getText();
+        System.out.println(buttonText);
+        switch (buttonText){
+            case "Select" -> button.setText("Yield");
+            case "Yield" -> button.setText("Select");
+        }
+
+    }
 }

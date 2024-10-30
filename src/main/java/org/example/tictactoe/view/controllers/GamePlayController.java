@@ -3,6 +3,7 @@ package org.example.tictactoe.view.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -18,8 +19,7 @@ public class GamePlayController  {
 
     public Button rightButton;
     public Button leftButton;
-    @FXML
-    private VBox rightPane;
+    @FXML private VBox rightPane;
     @FXML private VBox leftPane;
     @FXML private GridPane centerPane;
     private final List<Node> nodes = new ArrayList<>();
@@ -57,5 +57,9 @@ public class GamePlayController  {
         model.setBoardState(ONLINE_PLAY);
         model.RightPaneButtonEnabledOrDisabled(rightButton, ONLINE_PLAY);
         model.BoardPaneShower(nodes);
+    }
+
+    public void playerSelectedLeft(MouseEvent mouseEvent) {
+        model.playerSelected(mouseEvent);
     }
 }
