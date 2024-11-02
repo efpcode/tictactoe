@@ -5,25 +5,41 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 
 import static org.example.tictactoe.model.GameState.*;
 import static org.example.tictactoe.model.PlayerToken.*;
 
 
 public class Model {
-
-
-
-
+    private static final int NUMBER_OF_PLAYERS = 2;
     private GameState gameState = PAUSED;
-    private BoardState boardState;
-    List<Player> players = new ArrayList<>();
+    private BoardState boardState = BoardState.UNSET;
+    private PlayerToken currentPlayer;
+    private List<PlayerToken> players = new ArrayList<>();
     private int scoreCross = 0;
     private int scoreCircle = 0;
-    private StringProperty pointsCross = new SimpleStringProperty("Score: 0");
-    private StringProperty pointsCircle = new SimpleStringProperty("Score: 0");
+    private StringProperty crossPoints = new SimpleStringProperty("Score: 0");
+    private StringProperty circlePoints = new SimpleStringProperty("Score: 0");
+    private Random random = new Random();
+
+    public void randomFirstMover(){
+        int indexRandom = random.nextInt(NUMBER_OF_PLAYERS);
+        setCurrentPlayer(players.get(indexRandom));
+
+    }
+
+    public PlayerToken getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(PlayerToken currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
 
     public GameState getGameState() {
         return gameState;
@@ -32,36 +48,41 @@ public class Model {
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
     }
-    public String getPointsCross() {
-        return pointsCross.get();
+
+    public String getCrossPoints() {
+        return crossPoints.get();
     }
 
-    public StringProperty pointsCrossProperty() {
-        return pointsCross;
+    public StringProperty crossPointsProperty() {
+        return crossPoints;
     }
 
-    public void setPointsCross(String pointsCross) {
-        this.pointsCross.set(pointsCross);
+    public void setCrossPoints(String crossPoints) {
+        this.crossPoints.set(crossPoints);
     }
 
-    public String getPointsCircle() {
-        return pointsCircle.get();
+    public String getCirclePoints() {
+        return circlePoints.get();
     }
 
-    public StringProperty pointsCircleProperty() {
-        return pointsCircle;
+    public StringProperty circlePointsProperty() {
+        return circlePoints;
     }
 
-    public void setPointsCircle(String pointsCircle) {
-        this.pointsCircle.set(pointsCircle);
+    public void setCirclePoints(String circlePoints) {
+        this.circlePoints.set(circlePoints);
     }
 
     public void gameLoop() {
-        // Pseudocode with intended parts.
-//        start();
-//        pickedPlayers();
-//        playerMove();
-//        gameResult;
+        // initial gameState PAUSE
+        // setupGame() Select Players
+        // start() ->  gameState Playing
+        // move()
+        // detectWinner()
+        // updateScore()
+        // RestGame
+        // ExitGame()
+
 
     }
 
@@ -73,48 +94,52 @@ public class Model {
         this.boardState = boardState;
     }
 
-    public void RightPaneButtonEnabledOrDisabled(Button button, BoardState boardState){
-        switch (boardState){
-            case PLAYER_VS_COMPUTER, ONLINE_PLAY -> button.setDisable(true);
-            case PLAYER_VS_PLAYER, UNSET -> button.setDisable(false);
-
+    public void RightPaneButtonEnabledOrDisabled(Button button, BoardState boardState) {
+        if (Objects.requireNonNull(boardState) == BoardState.PLAYER_VS_COMPUTER || boardState == BoardState.ONLINE_PLAY || button.getText().equals("Yield")) {
+            button.setDisable(true);
+        } else if (boardState == BoardState.PLAYER_VS_PLAYER || boardState == BoardState.UNSET) {
+            button.setDisable(false);
         }
 
 
     }
 
-    public void BoardPaneShower(List<Node> nodes){
-        nodes.forEach(node -> {node.setVisible(true);});
+    public void BoardPaneShower(List<Node> nodes) {
+        nodes.forEach(node -> {
+            node.setVisible(true);
+        });
     }
 
-    public void BoardPaneHider(List<Node> nodes){
-        nodes.forEach(node -> {node.setVisible(false);});
+    public void BoardPaneHider(List<Node> nodes) {
+        nodes.forEach(node -> {
+            node.setVisible(false);
+        });
     }
 
-    public void playerCreated(PlayerToken token, Button button){
-        Player player = new Player(new Matrix2dPositions(), token);
-        players.add(player);
+    public void playerSelected(PlayerToken token, Button button) {
+        if (players.size() < NUMBER_OF_PLAYERS) {
+            players.add(token);
+        }
+        button.setDisable(true);
         button.setText("Yield");
 
     }
 
-    public void playerYieldLost(PlayerToken token, Button button){
+    public void playerYieldLost(PlayerToken token, Button button) {
         button.setDisable(true);
-        switch (token){
-            case CIRCLE -> setPointsCross("Score: "+ ++scoreCross);
-            case CROSS -> setPointsCircle("Score: "+ ++scoreCircle);
+        switch (token) {
+            case CIRCLE -> setCrossPoints("Score: " + ++scoreCross);
+            case CROSS -> setCirclePoints("Score: " + ++scoreCircle);
         }
 
     }
-
-
 
 
     public void playerLeftSelected(MouseEvent mouseEvent) {
         Button button = (Button) mouseEvent.getSource();
         String buttonText = button.getText();
-        switch (buttonText){
-            case "Select" -> playerCreated(CIRCLE, button);
+        switch (buttonText) {
+            case "Select" -> playerSelected(CIRCLE, button);
             case "Yield" -> playerYieldLost(CIRCLE, button);
         }
 
@@ -123,8 +148,8 @@ public class Model {
     public void playerRightSelected(MouseEvent mouseEvent) {
         Button button = (Button) mouseEvent.getSource();
         String buttonText = button.getText();
-        switch (buttonText){
-            case "Select" -> playerCreated(CROSS, button);
+        switch (buttonText) {
+            case "Select" -> playerSelected(CROSS, button);
             case "Yield" -> playerYieldLost(CROSS, button);
         }
 

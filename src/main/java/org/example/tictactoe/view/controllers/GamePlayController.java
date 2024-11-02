@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.example.tictactoe.model.Model;
+import org.example.tictactoe.model.PlayerToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +36,6 @@ public class GamePlayController  {
         nodes.add(leftPane);
         nodes.add(centerPane);
         model.BoardPaneHider(nodes);
-        model.setBoardState(UNSET);
     }
 
 
@@ -54,6 +54,7 @@ public class GamePlayController  {
     public void gamePVNPC(MouseEvent mouseEvent) {
         model.setBoardState(PLAYER_VS_COMPUTER);
         model.RightPaneButtonEnabledOrDisabled(rightButton, PLAYER_VS_COMPUTER);
+        model.playerSelected(PlayerToken.CROSS, rightButton);
         model.BoardPaneShower(nodes);
     }
 
