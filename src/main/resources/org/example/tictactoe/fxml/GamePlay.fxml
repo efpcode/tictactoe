@@ -118,7 +118,7 @@
             <HBox alignment="CENTER" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
 
                 <TilePane alignment="CENTER" focusTraversable="true" BorderPane.alignment="CENTER">
-                    <Button styleClass="menuButtons" text="Start" />
+                    <Button fx:id="startButton" styleClass="menuButtons" text="Start" onMouseClicked="#startButtonPressed" />
                 </TilePane>
             </HBox>
         </bottom>

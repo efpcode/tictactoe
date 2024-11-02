@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import org.example.tictactoe.model.GameState;
 import org.example.tictactoe.model.Model;
 import org.example.tictactoe.model.PlayerToken;
 
@@ -18,6 +19,7 @@ import static org.example.tictactoe.model.BoardState.*;
 public class GamePlayController  {
 
 
+    public Button startButton;
     public Button rightButton;
     public Button leftButton;
     @FXML private VBox rightPane;
@@ -35,6 +37,7 @@ public class GamePlayController  {
         nodes.add(rightPane);
         nodes.add(leftPane);
         nodes.add(centerPane);
+        startButton.setDisable(true);
         model.BoardPaneHider(nodes);
     }
 
@@ -66,9 +69,22 @@ public class GamePlayController  {
 
     public void playerSelectedLeft(MouseEvent mouseEvent) {
         model.playerLeftSelected(mouseEvent);
+        model.enableStartButton(startButton);
     }
 
     public void playerSelectedRight(MouseEvent mouseEvent) {
         model.playerRightSelected(mouseEvent);
+        model.enableStartButton(startButton);
     }
+
+    public void startButtonPressed(MouseEvent mouseEvent) {
+        Button button = (Button) mouseEvent.getSource();
+        model.updateStartButtonText(button);
+        if (model.getGameState() == GameState.PLAYING){
+            leftButton.setDisable(false);
+            rightButton.setDisable(false);
+        }
+
+    }
+
 }

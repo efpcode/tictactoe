@@ -23,9 +23,24 @@ public class Model {
     private List<PlayerToken> players = new ArrayList<>();
     private int scoreCross = 0;
     private int scoreCircle = 0;
+    private int roundCounter = 0;
+    private StringProperty roundSPlayed = new SimpleStringProperty("Round 0");
     private StringProperty crossPoints = new SimpleStringProperty("Score: 0");
     private StringProperty circlePoints = new SimpleStringProperty("Score: 0");
     private Random random = new Random();
+    final private GameResults gameResults = new GameResults();
+
+    public String getRoundSPlayed() {
+        return roundSPlayed.get();
+    }
+
+    public StringProperty roundSPlayedProperty() {
+        return roundSPlayed;
+    }
+
+    public void setRoundSPlayed(String roundSPlayed) {
+        this.roundSPlayed.set(roundSPlayed);
+    }
 
     public void randomFirstMover(){
         int indexRandom = random.nextInt(NUMBER_OF_PLAYERS);
@@ -135,6 +150,8 @@ public class Model {
     }
 
 
+
+
     public void playerLeftSelected(MouseEvent mouseEvent) {
         Button button = (Button) mouseEvent.getSource();
         String buttonText = button.getText();
@@ -154,5 +171,32 @@ public class Model {
         }
 
     }
+
+    public void gamePauseOrActiveStateSwitcher(){
+        switch (getGameState()) {
+            case PAUSED -> setGameState(PLAYING);
+            case PLAYING -> setGameState(PAUSED);
+        }
+
+
+    }
+
+    public void enableStartButton(Button button) {
+        if (players.size() == 2) {
+            button.setDisable(false);
+        }
+    }
+
+    public void updateStartButtonText(Button button){
+        gamePauseOrActiveStateSwitcher();
+        switch (button.getText()) {
+            case "Start", "Pause" -> button.setText("Playing");
+            case "Playing" -> button.setText("Pause");
+        }
+    }
+
+//    public boolean detectWinner(){
+//
+//    }
 
 }
