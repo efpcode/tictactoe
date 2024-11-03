@@ -2,18 +2,18 @@ package org.example.tictactoe.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameResults implements GameOutcomes {
-    private final int matrixSideLength;
+    final int matrixLength = 3;
     final private List<Player> players;
+
     GameResults() {
         this.players = new ArrayList<>();
-        this.matrixSideLength = 3;
     }
 
     GameResults(int matrixSideLength, List<Player> players) {
-        this.players= new ArrayList<>(players);
-        this.matrixSideLength = matrixSideLength;
+        this.players = new ArrayList<>(players);
     }
 
     public List<Player> getPlayers() {
@@ -23,13 +23,13 @@ public class GameResults implements GameOutcomes {
     public void addPlayer(Player player) {
         if (players.contains(player))
             removePlayer(player);
-        int index = player.getLinearRepresentation(matrixSideLength);
+        int index = player.getLinearRepresentation();
         this.players.add(index, player);
 
     }
 
     public void removePlayer(Player player) {
-        int index = player.getLinearRepresentation(matrixSideLength);
+        int index = player.getLinearRepresentation();
         this.players.remove(index);
     }
 
@@ -39,85 +39,116 @@ public class GameResults implements GameOutcomes {
 
     @Override
     public boolean rowWinner(PlayerToken token) {
-        List<Boolean> isRowWinner = new ArrayList<>();
-        for (int i = 0; i <matrixSideLength ; i++) {
-            int finalI = i;
-           isRowWinner.add( players.stream().filter(player -> player.position().row()== finalI)
-                    .allMatch(p -> p.token().equals(token)));
+        List<PlayerToken> expected = getPlayerTokens(token, matrixLength);
+        for (int i = 0; i < matrixLength; i++) {
+            int index = i;
+            var outcome = players.stream()
+                    .filter(p -> p.row() == index)
+                    .toList()
+                    .stream()
+                    .map(Player::token)
+                    .toList().equals(expected);
+            if (outcome)
+                return true;
         }
-        return isRowWinner.contains(true);
+        return false;
+
+
     }
+
+    public List<PlayerToken> getPlayerTokens(PlayerToken chip, int numberOfLoops) {
+        List<PlayerToken> expectedTokens = new ArrayList<>();
+        for (int i = 0; i < numberOfLoops; i++) {
+            expectedTokens.add(chip);
+        }
+        return expectedTokens;
+    }
+
 
     @Override
     public boolean columnWinner(PlayerToken token) {
-        List<Boolean> isColumnWinner = new ArrayList<>();
-        for (int i = 0; i <matrixSideLength ; i++) {
-            int finalI = i;
-            isColumnWinner.add( players.stream()
-                    .filter(player -> player.position().column()== finalI)
+        List<PlayerToken> expected = getPlayerTokens(token, matrixLength);
+        for (int i = 0; i < matrixLength; i++) {
+            int index = i;
+            var outcome = players.stream()
+                    .filter(p -> p.column() == index)
                     .toList()
                     .stream()
-                    .allMatch(player -> player.token().equals(token)));
+                    .map(Player::token)
+                    .toList().equals(expected);
+            if (outcome)
+                return true;
         }
-        return isColumnWinner.stream().anyMatch(i -> i);
+        return false;
     }
 
     @Override
     public boolean diagonalWinner(PlayerToken token) {
-        List<Boolean> isDiagonalWinner = new ArrayList<>();
-        for (int i = 0; i <matrixSideLength ; i++) {
-            int finalI = i;
-            isDiagonalWinner.add(players.stream()
-                    .filter(player ->player.position().row()== finalI && player.position().column()== finalI)
-                    .toList()
-                    .stream().allMatch(player -> player.token().equals(token)));
+        List<PlayerToken> expected = getPlayerTokens(token, matrixLength);
+        List<PlayerToken> diagonal = new ArrayList<>();
+
+        for (int i = 0; i < matrixLength; i++) {
+            int index = i;
+            var outcome = players.stream()
+                    .filter(player -> player.row() == index && player.column()==index)
+                    .map(Player::token)
+                    .toList();
+            if (!outcome.isEmpty())
+                diagonal.add(outcome.getFirst());
         }
-        return isDiagonalWinner.stream().allMatch(i -> i);
+
+        return expected.equals(diagonal);
+
     }
 
     @Override
     public boolean invertedDiagonalWinner(PlayerToken token) {
-        List<Boolean> isInvertedDiagonalWinner = new ArrayList<>();
-        for (int i = 0, j= matrixSideLength-1; i <matrixSideLength ; i++, j--) {
-            int finalI = i;
-            int finalJ = j;
+        List<PlayerToken> expected = getPlayerTokens(token, matrixLength);
+        List<PlayerToken> invertedDiagonal = new ArrayList<>();
 
-            isInvertedDiagonalWinner.add(players.stream()
-                    .filter(player -> player.position().row()==finalI && player.position().column()==finalJ)
-                    .toList()
-                    .stream()
-                    .allMatch(p -> p.token().equals(token)));
-
-
+        for (int i = 0, j = matrixLength-1; i < matrixLength; i++, j--) {
+            int rowIndex = i;
+            int columnIndex = j;
+            var outcome = players.stream()
+                    .filter(player -> player.row() == rowIndex && player.column()==columnIndex)
+                    .map(Player::token)
+                    .toList();
+            if (!outcome.isEmpty())
+                invertedDiagonal.add(outcome.getFirst());
         }
-        return isInvertedDiagonalWinner.stream().allMatch(i -> i);
+
+        return expected.equals(invertedDiagonal);
 
 
     }
 
     @Override
     public boolean tieGame() {
-        return players.stream()
-                .filter(player -> player.token().equals(PlayerToken.EMPTY))
-                .toList()
-                .isEmpty();
+        if (!players.isEmpty() && players.size()<(matrixLength*matrixLength)) {
+            return false;
+        }
+
+        var outcome = players.stream().map(Player::token).toList();
+        if(!outcome.contains(PlayerToken.EMPTY))
+            return true;
+
+        return false;
+
+
     }
 
     public static void main(String[] args) {
         GameResults gameResults = new GameResults();
-        gameResults.addPlayer(Player.of(0,0, PlayerToken.CROSS));
-        gameResults.addPlayer(Player.of(0,1, PlayerToken.CIRCLE));
-        gameResults.addPlayer(Player.of(0,2, PlayerToken.CROSS));
-        gameResults.addPlayer(Player.of(1,0, PlayerToken.CIRCLE));
-        gameResults.addPlayer(Player.of(1,1, PlayerToken.CROSS));
-        gameResults.addPlayer(Player.of(1,2, PlayerToken.CROSS));
-        gameResults.addPlayer(Player.of(2,0, PlayerToken.CIRCLE));
-        gameResults.addPlayer(Player.of(2,1, PlayerToken.CROSS));
-        gameResults.addPlayer(Player.of(2,2, PlayerToken.EMPTY));
+        gameResults.addPlayer(Player.of(0, 0, PlayerToken.CIRCLE));
+        gameResults.addPlayer(Player.of(0, 1, PlayerToken.CROSS));
+        gameResults.addPlayer(Player.of(0, 2, PlayerToken.CIRCLE));
+        gameResults.addPlayer(Player.of(1, 0, PlayerToken.CROSS));
+        gameResults.addPlayer(Player.of(1, 1, PlayerToken.CIRCLE));
+        gameResults.addPlayer(Player.of(1, 2, PlayerToken.CROSS));
+        gameResults.addPlayer(Player.of(2, 0, PlayerToken.CIRCLE));
+        gameResults.addPlayer(Player.of(2, 1, PlayerToken.EMPTY));
+        gameResults.addPlayer(Player.of(2, 2, PlayerToken.CROSS));
         System.out.println(gameResults.tieGame());
-        gameResults.addPlayer(Player.of(2,2, PlayerToken.CIRCLE));
-        System.out.println(gameResults.tieGame());
-        System.out.println(gameResults.players);
 
 
     }

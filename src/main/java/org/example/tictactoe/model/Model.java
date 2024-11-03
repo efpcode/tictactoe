@@ -6,10 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 import static org.example.tictactoe.model.GameState.*;
 import static org.example.tictactoe.model.PlayerToken.*;
@@ -195,8 +192,35 @@ public class Model {
         }
     }
 
-//    public boolean detectWinner(){
+//    public String isWinner(PlayerToken token) {
+//        HashMap<PlayerToken, String> winners = new HashMap<>();
+//        winners.put(CROSS, "cross");
+//        winners.put(CIRCLE, "circle");
+//        String boardMessage = "Round "+roundCounter;
+//        if (gameResults.tieGame() && getGameState()==PLAYING) {
+//            boardMessage += "Draw";
+//
+//        } else if (detectWinner(token) && getBoardState()==BoardState.PLAYER_VS_COMPUTER && getGameState()==PLAYING) {
+//            boardMessage += "Computer Won!";
+//
+//        } else if (detectWinner(token) && getGameState()==PLAYING) {
+//            boardMessage += "Computer "+ winners.getOrDefault(token, "Computer Won!");
+//
+//        }
+//
+//        return boardMessage;
+//
+//
 //
 //    }
+
+//    public boolean detectWinner(PlayerToken token) {
+//        return gameResults.diagonalWinner(token) || gameResults.rowWinner(token) || gameResults.columnWinner(token) || gameResults.invertedDiagonalWinner(token);
+//    }
+
+
+
+
+
 
 }
