@@ -41,8 +41,8 @@
 
 
                 <Label styleClass="playerToken" text="o" />
-                <Label styleClass="scoreStyle" text="${controller.model.circlePoints}"/>
-                <Button fx:id="leftButton" alignment="CENTER" contentDisplay="CENTER" styleClass="playerSelectButton" text="Select" onMouseClicked="#playerSelectedLeft" />
+                <Label styleClass="scoreStyle" text="${controller.model.circlePoints}" />
+                <Button fx:id="leftButton" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#playerSelectedLeft" styleClass="playerSelectButton" text="Select" />
             </VBox>
         </left>
         <right>
@@ -51,64 +51,51 @@
 
                 <Label styleClass="playerToken" text="x" />
                 <Label styleClass="scoreStyle" text="${controller.model.crossPoints}" />
-                <Button fx:id="rightButton" alignment="CENTER" contentDisplay="CENTER" styleClass="playerSelectButton" text="Select" onMouseClicked="#playerSelectedRight" />
+                <Button fx:id="rightButton" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#playerSelectedRight" styleClass="playerSelectButton" text="Select" />
 
             </VBox>
         </right>
         <center>
-            <GridPane fx:id="centerPane" id="cssCenterPane" alignment="CENTER" hgap="45.0" maxWidth="700.0" prefHeight="996.0" prefWidth="400.0" scaleX="0.62" scaleY="0.62" style="-fx-border-color: green;" stylesheets="@../css/gamePlay.css" vgap="45.0" BorderPane.alignment="CENTER">
+            <GridPane id="cssCenterPane" fx:id="centerPane" alignment="CENTER" gridLinesVisible="true" hgap="250"  maxWidth="818.0" prefHeight="825.0" prefWidth="818.0" scaleX="0.62" scaleY="0.62" style="-fx-border-color: green;" stylesheets="@../css/gamePlay.css" vgap="250.0" BorderPane.alignment="CENTER">
+                <padding>
+                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                </padding>
 
-                <ImageView nodeOrientation="INHERIT" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                    <Image url="@../images/robot.png" />
+                <ImageView image="${controller.model.images[0]}" onMouseClicked="#getImageOne" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                 </ImageView>
 
-                <ImageView nodeOrientation="INHERIT" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                    <Image url="@../images/circle.png" />
+                <ImageView image="${controller.model.images[1]}" onMouseClicked="#getImageTwo" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                 </ImageView>
 
-                <ImageView GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                    <Image url="@../images/cross.png" />
+                <ImageView image="${controller.model.images[2]}" onMouseClicked="#getImageThree" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
                 </ImageView>
 
-                <ImageView GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                    <Image url="@../images/robot.png" />
+                <ImageView image="${controller.model.images[3]}" onMouseClicked="#getImageFour" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                 </ImageView>
 
-                <ImageView GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                    <Image url="@../images/robot.png" />
+                <ImageView image="${controller.model.images[4]}" onMouseClicked="#getImageFive" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                 </ImageView>
 
-                <ImageView nodeOrientation="INHERIT" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                    <Image url="@../images/robot.png" />
+                <ImageView image="${controller.model.images[5]}" onMouseClicked="#getImageSix" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                 </ImageView>
 
-                <ImageView GridPane.columnIndex="0" GridPane.rowIndex="2">
-                    <Image url="@../images/robot.png" />
+                <ImageView image="${controller.model.images[6]}" onMouseClicked="#getImageSeven" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                 </ImageView>
 
-                <ImageView GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                <Image url="@../images/robot.png" />
+                <ImageView image="${controller.model.images[7]}" onMouseClicked="#getImageEight" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                 </ImageView>
 
-                <ImageView GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                    <Image url="@../images/robot.png" />
-               <GridPane.margin>
-                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-               </GridPane.margin>
-                </ImageView>
-
-                <ImageView GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                    <Image url="@../images/robot.png" />
+                <ImageView image="${controller.model.images[8]}" onMouseClicked="#getImageNine" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
                 </ImageView>
                 <columnConstraints>
-                    <ColumnConstraints />
-                    <ColumnConstraints />
-                    <ColumnConstraints />
+                    <ColumnConstraints maxWidth="200.0" minWidth="100.0" prefWidth="0.0" />
+                    <ColumnConstraints maxWidth="200.0" minWidth="100.0" prefWidth="0.0"/>
+                    <ColumnConstraints maxWidth="200.0" minWidth="100.0" prefWidth="0.0"/>
                 </columnConstraints>
                 <rowConstraints>
-                    <RowConstraints />
-                    <RowConstraints />
-                    <RowConstraints />
+                    <RowConstraints maxHeight="200.0" minHeight="100.0" prefHeight="0.0" />
+                    <RowConstraints maxHeight="200.0" minHeight="100.0" prefHeight="0.0" />
+                    <RowConstraints maxHeight="200.0" minHeight="100.0" prefHeight="0.0" />
                 </rowConstraints>
 
 
@@ -118,7 +105,7 @@
             <HBox alignment="CENTER" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
 
                 <TilePane alignment="CENTER" focusTraversable="true" BorderPane.alignment="CENTER">
-                    <Button fx:id="startButton" styleClass="menuButtons" text="Start" onMouseClicked="#startButtonPressed" />
+                    <Button fx:id="startButton" onMouseClicked="#startButtonPressed" styleClass="menuButtons" text="Start" />
                 </TilePane>
             </HBox>
         </bottom>

@@ -1,9 +1,14 @@
 package org.example.tictactoe.model;
 
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 
 import java.util.*;
@@ -14,6 +19,7 @@ import static org.example.tictactoe.model.PlayerToken.*;
 
 public class Model {
     private static final int NUMBER_OF_PLAYERS = 2;
+    private static final int MATRIX_SIDE_LENGTH = 3;
     private GameState gameState = PAUSED;
     private BoardState boardState = BoardState.UNSET;
     private PlayerToken currentPlayer;
@@ -27,6 +33,39 @@ public class Model {
     private Random random = new Random();
     final private GameResults gameResults = new GameResults();
 
+    public ObservableList<Image> getImages() {
+        return images.get();
+    }
+
+    public ListProperty<Image> imagesProperty() {
+        return images;
+    }
+
+    public void setImages(ObservableList<Image> images) {
+        this.images.set(images);
+    }
+
+    private ListProperty<Image> images = new SimpleListProperty<>(FXCollections.observableArrayList());
+
+    Image empty;
+    Image robot;
+    Image cross;
+    Image circle;
+
+    public Model() {
+        empty = new Image(getClass().getResource("/org/example/tictactoe/images/empty.png").toExternalForm());
+        robot = new Image(getClass().getResource("/org/example/tictactoe/images/robot.png").toExternalForm());
+        cross = new Image(getClass().getResource("/org/example/tictactoe/images/cross.png").toExternalForm());
+        circle = new Image(getClass().getResource("/org/example/tictactoe/images/circle.png").toExternalForm());
+
+        for (int i = 0; i < (MATRIX_SIDE_LENGTH * MATRIX_SIDE_LENGTH); i++) {
+            images.add(robot);
+
+        }
+
+    }
+
+
     public String getRoundSPlayed() {
         return roundSPlayed.get();
     }
@@ -39,7 +78,7 @@ public class Model {
         this.roundSPlayed.set(roundSPlayed);
     }
 
-    public void randomFirstMover(){
+    public void randomFirstMover() {
         int indexRandom = random.nextInt(NUMBER_OF_PLAYERS);
         setCurrentPlayer(players.get(indexRandom));
 
@@ -91,8 +130,9 @@ public class Model {
         // start() ->  gameState Playing
         // move()
         // detectWinner()
+        // if no Player won switchPlayers
         // updateScore()
-        // RestGame
+        // RestGame()
         // ExitGame()
 
 
@@ -147,8 +187,6 @@ public class Model {
     }
 
 
-
-
     public void playerLeftSelected(MouseEvent mouseEvent) {
         Button button = (Button) mouseEvent.getSource();
         String buttonText = button.getText();
@@ -169,7 +207,7 @@ public class Model {
 
     }
 
-    public void gamePauseOrActiveStateSwitcher(){
+    public void gamePauseOrActiveStateSwitcher() {
         switch (getGameState()) {
             case PAUSED -> setGameState(PLAYING);
             case PLAYING -> setGameState(PAUSED);
@@ -184,7 +222,7 @@ public class Model {
         }
     }
 
-    public void updateStartButtonText(Button button){
+    public void updateStartButtonText(Button button) {
         gamePauseOrActiveStateSwitcher();
         switch (button.getText()) {
             case "Start", "Pause" -> button.setText("Playing");
@@ -192,35 +230,45 @@ public class Model {
         }
     }
 
-//    public String isWinner(PlayerToken token) {
-//        HashMap<PlayerToken, String> winners = new HashMap<>();
-//        winners.put(CROSS, "cross");
-//        winners.put(CIRCLE, "circle");
-//        String boardMessage = "Round "+roundCounter;
-//        if (gameResults.tieGame() && getGameState()==PLAYING) {
-//            boardMessage += "Draw";
-//
-//        } else if (detectWinner(token) && getBoardState()==BoardState.PLAYER_VS_COMPUTER && getGameState()==PLAYING) {
-//            boardMessage += "Computer Won!";
-//
-//        } else if (detectWinner(token) && getGameState()==PLAYING) {
-//            boardMessage += "Computer "+ winners.getOrDefault(token, "Computer Won!");
-//
-//        }
-//
-//        return boardMessage;
-//
-//
-//
-//    }
+    public String isWinner(PlayerToken token) {
+        HashMap<PlayerToken, String> winners = new HashMap<>();
+        winners.put(CROSS, "cross");
+        winners.put(CIRCLE, "circle");
+        String boardMessage = "Round " + roundCounter;
 
-//    public boolean detectWinner(PlayerToken token) {
-//        return gameResults.diagonalWinner(token) || gameResults.rowWinner(token) || gameResults.columnWinner(token) || gameResults.invertedDiagonalWinner(token);
-//    }
+        if (detectWinner(token) && getBoardState() == BoardState.PLAYER_VS_COMPUTER && getGameState() == PLAYING) {
+            boardMessage += "Computer Won!";
+
+        } else if (detectWinner(token) && getGameState() == PLAYING) {
+            boardMessage += "Computer " + winners.getOrDefault(token, "Computer Won!");
+
+        } else if (gameResults.tieGame() && getGameState() == PLAYING) {
+            boardMessage += "Draw";
+
+        }
+
+        return boardMessage;
 
 
+    }
+
+    public boolean detectWinner(PlayerToken token) {
+        return gameResults.diagonalWinner(token) || gameResults.rowWinner(token) || gameResults.columnWinner(token) || gameResults.invertedDiagonalWinner(token);
+    }
 
 
+    public void pickedGridCell(int row, int column) {
+        if (getGameState() == PLAYING)
+            System.out.println(row + " " + column);
+    }
 
+    public void startGame() {
+        gameResults.initializeGameBoard();
+        if (gameResults.isGameBoardEmpty()) {
+            System.out.println("Game is empty");
+            randomFirstMover();
+        }
+        System.out.println(getCurrentPlayer());
+    }
 
 }

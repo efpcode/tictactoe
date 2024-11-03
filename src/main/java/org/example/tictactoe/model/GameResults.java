@@ -2,18 +2,19 @@ package org.example.tictactoe.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GameResults implements GameOutcomes {
-    final int matrixLength = 3;
+    private int matrixLength;
     final private List<Player> players;
 
     GameResults() {
         this.players = new ArrayList<>();
+        this.matrixLength = 3;
     }
 
     GameResults(int matrixSideLength, List<Player> players) {
         this.players = new ArrayList<>(players);
+        this.matrixLength = matrixSideLength;
     }
 
     public List<Player> getPlayers() {
@@ -27,6 +28,22 @@ public class GameResults implements GameOutcomes {
         this.players.add(index, player);
 
     }
+
+    public void initializeGameBoard() {
+        List<Player> emptyBoard = new ArrayList<>();
+        for (int i = 0; i < (matrixLength*matrixLength); i++) {
+            emptyBoard.add(i, Player.of(i/matrixLength, i%matrixLength, PlayerToken.EMPTY));
+
+        }
+        this.players.addAll(emptyBoard);
+
+    }
+
+    public boolean isGameBoardEmpty() {
+        var outcome = players.stream().filter(player -> player.token() == PlayerToken.EMPTY).count();
+        return outcome == (int)(matrixLength * matrixLength);
+    }
+
 
     public void removePlayer(Player player) {
         int index = player.getLinearRepresentation();
@@ -90,7 +107,7 @@ public class GameResults implements GameOutcomes {
         for (int i = 0; i < matrixLength; i++) {
             int index = i;
             var outcome = players.stream()
-                    .filter(player -> player.row() == index && player.column()==index)
+                    .filter(player -> player.row() == index && player.column() == index)
                     .map(Player::token)
                     .toList();
             if (!outcome.isEmpty())
@@ -106,11 +123,11 @@ public class GameResults implements GameOutcomes {
         List<PlayerToken> expected = getPlayerTokens(token, matrixLength);
         List<PlayerToken> invertedDiagonal = new ArrayList<>();
 
-        for (int i = 0, j = matrixLength-1; i < matrixLength; i++, j--) {
+        for (int i = 0, j = matrixLength - 1; i < matrixLength; i++, j--) {
             int rowIndex = i;
             int columnIndex = j;
             var outcome = players.stream()
-                    .filter(player -> player.row() == rowIndex && player.column()==columnIndex)
+                    .filter(player -> player.row() == rowIndex && player.column() == columnIndex)
                     .map(Player::token)
                     .toList();
             if (!outcome.isEmpty())
@@ -124,33 +141,15 @@ public class GameResults implements GameOutcomes {
 
     @Override
     public boolean tieGame() {
-        if (!players.isEmpty() && players.size()<(matrixLength*matrixLength)) {
+        if (!players.isEmpty() && players.size() < (matrixLength * matrixLength)) {
             return false;
         }
 
         var outcome = players.stream().map(Player::token).toList();
-        if(!outcome.contains(PlayerToken.EMPTY))
+        if (!outcome.contains(PlayerToken.EMPTY))
             return true;
 
         return false;
-
-
-    }
-
-    public static void main(String[] args) {
-        GameResults gameResults = new GameResults();
-        gameResults.addPlayer(Player.of(0, 0, PlayerToken.CIRCLE));
-        gameResults.addPlayer(Player.of(0, 1, PlayerToken.CROSS));
-        gameResults.addPlayer(Player.of(0, 2, PlayerToken.CIRCLE));
-        gameResults.addPlayer(Player.of(1, 0, PlayerToken.CROSS));
-        gameResults.addPlayer(Player.of(1, 1, PlayerToken.CIRCLE));
-        gameResults.addPlayer(Player.of(1, 2, PlayerToken.CROSS));
-        gameResults.addPlayer(Player.of(2, 0, PlayerToken.CIRCLE));
-        gameResults.addPlayer(Player.of(2, 1, PlayerToken.EMPTY));
-        gameResults.addPlayer(Player.of(2, 2, PlayerToken.CROSS));
-        System.out.println(gameResults.tieGame());
-
-
     }
 
 

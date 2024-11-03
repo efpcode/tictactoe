@@ -3,7 +3,6 @@ package org.example.tictactoe.view.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -46,6 +45,56 @@ public class GamePlayController  {
         System.exit(0);
 
     }
+    public void getImageOne(MouseEvent mouseEvent) {
+
+        model.pickedGridCell(0,0);
+
+    }
+
+    public void getImageTwo(MouseEvent mouseEvent) {
+        model.pickedGridCell(0,1);
+
+    }
+
+    public void getImageThree(MouseEvent mouseEvent) {
+
+        model.pickedGridCell(0,2);
+
+    }
+
+    public void getImageFour(MouseEvent mouseEvent) {
+
+        model.pickedGridCell(1,0);
+
+    }
+
+    public void getImageFive(MouseEvent mouseEvent) {
+        model.pickedGridCell(1,1);
+
+    }
+
+    public void getImageSix(MouseEvent mouseEvent) {
+
+        model.pickedGridCell(1,2);
+
+    }
+    public void getImageSeven(MouseEvent mouseEvent) {
+
+        model.pickedGridCell(2,0);
+
+    }
+
+    public void getImageEight(MouseEvent mouseEvent) {
+        model.pickedGridCell(2,1);
+
+    }
+
+    public void getImageNine(MouseEvent mouseEvent) {
+
+        model.pickedGridCell(2,2);
+
+    }
+
 
     public void gamePVP(MouseEvent mouseEvent) {
         model.setBoardState(PLAYER_VS_PLAYER);
@@ -80,11 +129,13 @@ public class GamePlayController  {
     public void startButtonPressed(MouseEvent mouseEvent) {
         Button button = (Button) mouseEvent.getSource();
         model.updateStartButtonText(button);
+        model.startGame();
         if (model.getGameState() == GameState.PLAYING){
             leftButton.setDisable(false);
             rightButton.setDisable(false);
         }
 
     }
+
 
 }
