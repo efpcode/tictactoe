@@ -13,7 +13,7 @@
         </padding>
 
         <top>
-            <VBox alignment="TOP_CENTER" maxHeight="180.0" minHeight="150.0" style="-fx-border-color: red;" stylesheets="@../css/gamePlay.css" BorderPane.alignment="CENTER">
+            <VBox alignment="TOP_CENTER" maxHeight="180.0" minHeight="150.0" style="-fx-border-color: red" BorderPane.alignment="CENTER">
                 <Label id="menuTitle" text="Welcome To TicTacToe" />
                 <TilePane>
                     <Button id="Quit" alignment="TOP_LEFT" onMouseClicked="#quitGame" styleClass="menuButtons" text="Quit" BorderPane.alignment="TOP_LEFT" />
@@ -56,49 +56,27 @@
             </VBox>
         </right>
         <center>
-            <GridPane id="cssCenterPane" fx:id="centerPane" alignment="CENTER" gridLinesVisible="true" hgap="250"  maxWidth="818.0" prefHeight="825.0" prefWidth="818.0" scaleX="0.62" scaleY="0.62" style="-fx-border-color: green;" stylesheets="@../css/gamePlay.css" vgap="250.0" BorderPane.alignment="CENTER">
-                <padding>
-                    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                </padding>
+            <GridPane id="cssCenterPane" fx:id="centerPane" alignment="CENTER" cache="true" cacheHint="SPEED" hgap="50" maxWidth="818.0" prefHeight="825.0" prefWidth="818.0"  style="-fx-border-color: green;" vgap="50" BorderPane.alignment="CENTER">
 
-                <ImageView image="${controller.model.images[0]}" onMouseClicked="#getImageOne" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                </ImageView>
-
-                <ImageView image="${controller.model.images[1]}" onMouseClicked="#getImageTwo" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                </ImageView>
-
-                <ImageView image="${controller.model.images[2]}" onMouseClicked="#getImageThree" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER">
-                </ImageView>
-
-                <ImageView image="${controller.model.images[3]}" onMouseClicked="#getImageFour" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                </ImageView>
-
-                <ImageView image="${controller.model.images[4]}" onMouseClicked="#getImageFive" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                </ImageView>
-
-                <ImageView image="${controller.model.images[5]}" onMouseClicked="#getImageSix" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                </ImageView>
-
-                <ImageView image="${controller.model.images[6]}" onMouseClicked="#getImageSeven" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                </ImageView>
-
-                <ImageView image="${controller.model.images[7]}" onMouseClicked="#getImageEight" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                </ImageView>
-
-                <ImageView image="${controller.model.images[8]}" onMouseClicked="#getImageNine" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
-                </ImageView>
+                <ImageView id="image0" image="${controller.model.images[0]}" onMouseClicked="#getImage" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                <ImageView id="image1" image="${controller.model.images[1]}" onMouseClicked="#getImage" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                <ImageView id="image2" image="${controller.model.images[2]}" onMouseClicked="#getImage" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                <ImageView id="image3" image="${controller.model.images[3]}" onMouseClicked="#getImage" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                <ImageView id="image4" image="${controller.model.images[4]}" onMouseClicked="#getImage" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                <ImageView id="image5" image="${controller.model.images[5]}" onMouseClicked="#getImage" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                <ImageView id="image6" image="${controller.model.images[6]}" onMouseClicked="#getImage" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                <ImageView id="image7" image="${controller.model.images[7]}" onMouseClicked="#getImage" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                <ImageView id="image8" image="${controller.model.images[8]}" onMouseClicked="#getImage" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                 <columnConstraints>
-                    <ColumnConstraints maxWidth="200.0" minWidth="100.0" prefWidth="0.0" />
-                    <ColumnConstraints maxWidth="200.0" minWidth="100.0" prefWidth="0.0"/>
-                    <ColumnConstraints maxWidth="200.0" minWidth="100.0" prefWidth="0.0"/>
+                    <ColumnConstraints />
+                    <ColumnConstraints />
+                    <ColumnConstraints />
                 </columnConstraints>
                 <rowConstraints>
-                    <RowConstraints maxHeight="200.0" minHeight="100.0" prefHeight="0.0" />
-                    <RowConstraints maxHeight="200.0" minHeight="100.0" prefHeight="0.0" />
-                    <RowConstraints maxHeight="200.0" minHeight="100.0" prefHeight="0.0" />
+                    <RowConstraints />
+                    <RowConstraints />
+                    <RowConstraints />
                 </rowConstraints>
-
-
             </GridPane>
         </center>
         <bottom>

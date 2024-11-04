@@ -59,7 +59,7 @@ public class Model {
         circle = new Image(getClass().getResource("/org/example/tictactoe/images/circle.png").toExternalForm());
 
         for (int i = 0; i < (MATRIX_SIDE_LENGTH * MATRIX_SIDE_LENGTH); i++) {
-            images.add(robot);
+            images.add(empty);
 
         }
 
@@ -146,26 +146,17 @@ public class Model {
         this.boardState = boardState;
     }
 
-    public void RightPaneButtonEnabledOrDisabled(Button button, BoardState boardState) {
-        if (Objects.requireNonNull(boardState) == BoardState.PLAYER_VS_COMPUTER || boardState == BoardState.ONLINE_PLAY || button.getText().equals("Yield")) {
-            button.setDisable(true);
-        } else if (boardState == BoardState.PLAYER_VS_PLAYER || boardState == BoardState.UNSET) {
-            button.setDisable(false);
+
+
+
+    public void switchPlayer(){
+        var player = getCurrentPlayer();
+        if (getGameState()==PLAYING && player.equals(CIRCLE)){
+            setCurrentPlayer(CROSS);
+        } else if (getGameState()==PLAYING && player.equals(CROSS)) {
+            setCurrentPlayer(CIRCLE);
+
         }
-
-
-    }
-
-    public void BoardPaneShower(List<Node> nodes) {
-        nodes.forEach(node -> {
-            node.setVisible(true);
-        });
-    }
-
-    public void BoardPaneHider(List<Node> nodes) {
-        nodes.forEach(node -> {
-            node.setVisible(false);
-        });
     }
 
     public void playerSelected(PlayerToken token, Button button) {
@@ -256,19 +247,43 @@ public class Model {
         return gameResults.diagonalWinner(token) || gameResults.rowWinner(token) || gameResults.columnWinner(token) || gameResults.invertedDiagonalWinner(token);
     }
 
+    public void updateGameBoard(Player move){
+
+        int imageIndexPlayed = move.getLinearRepresentation();
+        var boardTile = gameResults.getPlayers().get(imageIndexPlayed);
+        var imageToUpdateBoard = getImageForPlayer();
+
+        if(boardTile.token()== EMPTY){
+            gameResults.addPlayer(move);
+            images.set(imageIndexPlayed, imageToUpdateBoard);
+            switchPlayer();
+        };
+
+
+    }
+
 
     public void pickedGridCell(int row, int column) {
-        if (getGameState() == PLAYING)
-            System.out.println(row + " " + column);
+        Player move = Player.of(row, column, getCurrentPlayer());
+        updateGameBoard(move);
+
+    }
+
+    public Image getImageForPlayer() {
+        if (getCurrentPlayer().equals(CROSS) && getBoardState()==BoardState.PLAYER_VS_COMPUTER)
+            return robot;
+        else if (getCurrentPlayer().equals(CIRCLE) && getBoardState()==BoardState.PLAYER_VS_PLAYER || getBoardState()==BoardState.PLAYER_VS_COMPUTER)
+            return circle;
+        else if (getCurrentPlayer().equals(CROSS) && getBoardState()==BoardState.PLAYER_VS_PLAYER)
+            return cross;
+        else return empty;
     }
 
     public void startGame() {
         gameResults.initializeGameBoard();
         if (gameResults.isGameBoardEmpty()) {
-            System.out.println("Game is empty");
             randomFirstMover();
         }
-        System.out.println(getCurrentPlayer());
     }
 
 }

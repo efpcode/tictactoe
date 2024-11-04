@@ -3,15 +3,18 @@ package org.example.tictactoe.view.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import org.example.tictactoe.model.BoardState;
 import org.example.tictactoe.model.GameState;
 import org.example.tictactoe.model.Model;
 import org.example.tictactoe.model.PlayerToken;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static org.example.tictactoe.model.BoardState.*;
 
@@ -37,7 +40,7 @@ public class GamePlayController  {
         nodes.add(leftPane);
         nodes.add(centerPane);
         startButton.setDisable(true);
-        model.BoardPaneHider(nodes);
+        BoardPaneHider(nodes);
     }
 
 
@@ -45,75 +48,45 @@ public class GamePlayController  {
         System.exit(0);
 
     }
-    public void getImageOne(MouseEvent mouseEvent) {
 
-        model.pickedGridCell(0,0);
-
+    public void RightPaneButtonEnabledOrDisabled(Button button, BoardState boardState) {
+        if (Objects.requireNonNull(boardState) == BoardState.PLAYER_VS_COMPUTER || boardState == BoardState.ONLINE_PLAY || button.getText().equals("Yield"))
+            button.setDisable(true);
+        button.setDisable(false);
     }
 
-    public void getImageTwo(MouseEvent mouseEvent) {
-        model.pickedGridCell(0,1);
-
+    public void BoardPaneShower(List<Node> nodes) {
+        nodes.forEach(node -> {
+            node.setVisible(true);
+        });
     }
 
-    public void getImageThree(MouseEvent mouseEvent) {
-
-        model.pickedGridCell(0,2);
-
+    public void BoardPaneHider(List<Node> nodes) {
+        nodes.forEach(node -> {
+            node.setVisible(false);
+        });
     }
 
-    public void getImageFour(MouseEvent mouseEvent) {
-
-        model.pickedGridCell(1,0);
-
-    }
-
-    public void getImageFive(MouseEvent mouseEvent) {
-        model.pickedGridCell(1,1);
-
-    }
-
-    public void getImageSix(MouseEvent mouseEvent) {
-
-        model.pickedGridCell(1,2);
-
-    }
-    public void getImageSeven(MouseEvent mouseEvent) {
-
-        model.pickedGridCell(2,0);
-
-    }
-
-    public void getImageEight(MouseEvent mouseEvent) {
-        model.pickedGridCell(2,1);
-
-    }
-
-    public void getImageNine(MouseEvent mouseEvent) {
-
-        model.pickedGridCell(2,2);
-
-    }
 
 
     public void gamePVP(MouseEvent mouseEvent) {
         model.setBoardState(PLAYER_VS_PLAYER);
-        model.RightPaneButtonEnabledOrDisabled(rightButton, PLAYER_VS_PLAYER);
-        model.BoardPaneShower(nodes);
+        RightPaneButtonEnabledOrDisabled(rightButton, PLAYER_VS_PLAYER);
+        BoardPaneShower(nodes);
 
     }
 
     public void gamePVNPC(MouseEvent mouseEvent) {
         model.setBoardState(PLAYER_VS_COMPUTER);
-        model.RightPaneButtonEnabledOrDisabled(rightButton, PLAYER_VS_COMPUTER);
+        RightPaneButtonEnabledOrDisabled(rightButton, PLAYER_VS_COMPUTER);
         model.playerSelected(PlayerToken.CROSS, rightButton);
-        model.BoardPaneShower(nodes);
+        BoardPaneShower(nodes);
     }
 
     public void gameOnline(MouseEvent mouseEvent) {
         model.setBoardState(ONLINE_PLAY);
-        model.RightPaneButtonEnabledOrDisabled(rightButton, ONLINE_PLAY);
-        model.BoardPaneShower(nodes);
+        RightPaneButtonEnabledOrDisabled(rightButton, ONLINE_PLAY);
+        BoardPaneShower(nodes);
     }
 
     public void playerSelectedLeft(MouseEvent mouseEvent) {
@@ -138,4 +111,30 @@ public class GamePlayController  {
     }
 
 
+    public void getImage(MouseEvent mouseEvent) {
+        if(model.getGameState() == GameState.PLAYING) {
+            ImageView tileImage = (ImageView) mouseEvent.getSource();
+            var rowAndColumn = getGridCoordinates(tileImage.getId());
+            model.pickedGridCell(rowAndColumn.getFirst(), rowAndColumn.getLast());
+        }
+
+    }
+
+    public List<Integer> getGridCoordinates(String imageName) {
+        List<Integer> coordinates = new ArrayList<>(2);
+        switch (imageName) {
+            case "image0" -> coordinates.addAll(List.of(0, 0));
+            case "image1" -> coordinates.addAll(List.of(0, 1));
+            case "image2" -> coordinates.addAll(List.of(0, 2));
+            case "image3" -> coordinates.addAll(List.of(1, 0));
+            case "image4" -> coordinates.addAll(List.of(1, 1));
+            case "image5" -> coordinates.addAll(List.of(1, 2));
+            case "image6" -> coordinates.addAll(List.of(2, 0));
+            case "image7" -> coordinates.addAll(List.of(2, 1));
+            case "image8" -> coordinates.addAll(List.of(2, 2));
+        }
+
+        return coordinates;
+
+    }
 }
