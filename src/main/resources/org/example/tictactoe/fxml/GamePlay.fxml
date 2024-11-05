@@ -56,26 +56,26 @@
             </VBox>
         </right>
         <center>
-            <GridPane id="cssCenterPane" fx:id="centerPane" alignment="CENTER" cache="true" cacheHint="SPEED" hgap="50" maxWidth="818.0" prefHeight="825.0" prefWidth="818.0"  style="-fx-border-color: green;" vgap="50" BorderPane.alignment="CENTER">
+            <GridPane id="cssCenterPane" fx:id="centerPane" alignment="CENTER" hgap="20" style="-fx-border-color: green;" vgap="20">
 
-                <ImageView id="image0" image="${controller.model.images[0]}" onMouseClicked="#getImage" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
-                <ImageView id="image1" image="${controller.model.images[1]}" onMouseClicked="#getImage" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
-                <ImageView id="image2" image="${controller.model.images[2]}" onMouseClicked="#getImage" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
-                <ImageView id="image3" image="${controller.model.images[3]}" onMouseClicked="#getImage" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                <ImageView id="image4" image="${controller.model.images[4]}" onMouseClicked="#getImage" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                <ImageView id="image5" image="${controller.model.images[5]}" onMouseClicked="#getImage" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                <ImageView id="image6" image="${controller.model.images[6]}" onMouseClicked="#getImage" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                <ImageView id="image7" image="${controller.model.images[7]}" onMouseClicked="#getImage" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                <ImageView id="image8" image="${controller.model.images[8]}" onMouseClicked="#getImage" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                <ImageView id="image0" image="${controller.model.images[0]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                <ImageView id="image1" image="${controller.model.images[1]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                <ImageView id="image2" image="${controller.model.images[2]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                <ImageView id="image3" image="${controller.model.images[3]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                <ImageView id="image4" image="${controller.model.images[4]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                <ImageView id="image5" image="${controller.model.images[5]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                <ImageView id="image6" image="${controller.model.images[6]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                <ImageView id="image7" image="${controller.model.images[7]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                <ImageView id="image8" image="${controller.model.images[8]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                 <columnConstraints>
-                    <ColumnConstraints />
-                    <ColumnConstraints />
-                    <ColumnConstraints />
+                    <ColumnConstraints percentWidth="Infinity" prefWidth="100" />
+                    <ColumnConstraints percentWidth="Infinity" prefWidth="100" />
+                    <ColumnConstraints percentWidth="Infinity" prefWidth="100" />
                 </columnConstraints>
                 <rowConstraints>
-                    <RowConstraints />
-                    <RowConstraints />
-                    <RowConstraints />
+                    <RowConstraints percentHeight="Infinity" prefHeight="100" />
+                    <RowConstraints percentHeight="Infinity" prefHeight="100" />
+                    <RowConstraints percentHeight="Infinity" prefHeight="100" />
                 </rowConstraints>
             </GridPane>
         </center>

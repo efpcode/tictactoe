@@ -6,7 +6,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -258,6 +257,7 @@ public class Model {
             images.set(imageIndexPlayed, imageToUpdateBoard);
             switchPlayer();
         };
+        System.out.println(images.size());
 
 
     }
