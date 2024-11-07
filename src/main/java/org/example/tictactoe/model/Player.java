@@ -1,5 +1,5 @@
 package org.example.tictactoe.model;
-
+import org.example.tictactoe.model.SquaredMatrixCoordinates;
 
 import java.util.Objects;
 
@@ -24,9 +24,14 @@ public record Player(int row, int column, int matrixLength , PlayerToken token) 
 
     }
 
-    public static Player of(int row, int column, PlayerToken token) {
+    public static Player valueOf(int row, int column, PlayerToken token) {
         return new Player(row, column, token);
 
+    }
+    public static Player valueOf(SquaredMatrixCoordinates coordinates, PlayerToken token) {
+        int row = coordinates.row();
+        int column = coordinates.column();
+        return new Player(row, column, token);
     }
 
     public int getLinearRepresentation(){

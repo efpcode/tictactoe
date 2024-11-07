@@ -12,14 +12,14 @@ import javafx.scene.input.MouseEvent;
 
 import java.util.*;
 
-import static org.example.tictactoe.model.GameState.*;
+import static org.example.tictactoe.model.GameStatePlaying.*;
 import static org.example.tictactoe.model.PlayerToken.*;
 
 
 public class Model {
     private static final int NUMBER_OF_PLAYERS = 2;
     private static final int MATRIX_SIDE_LENGTH = 3;
-    private GameState gameState = PAUSED;
+    private GameStatePlaying gameState = PAUSED;
     private BoardState boardState = BoardState.UNSET;
     private PlayerToken currentPlayer;
     private List<PlayerToken> players = new ArrayList<>();
@@ -30,7 +30,8 @@ public class Model {
     private StringProperty crossPoints = new SimpleStringProperty("Score: 0");
     private StringProperty circlePoints = new SimpleStringProperty("Score: 0");
     private Random random = new Random();
-    final private GameResults gameResults = new GameResults();
+    private GameModal gameMode;
+    protected final GameResults gameResults = new GameResults();
 
     public ObservableList<Image> getImages() {
         return images.get();
@@ -44,7 +45,7 @@ public class Model {
         this.images.set(images);
     }
 
-    private ListProperty<Image> images = new SimpleListProperty<>(FXCollections.observableArrayList());
+    protected ListProperty<Image> images = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     Image empty;
     Image robot;
@@ -91,11 +92,11 @@ public class Model {
         this.currentPlayer = currentPlayer;
     }
 
-    public GameState getGameState() {
+    public GameStatePlaying getGameState() {
         return gameState;
     }
 
-    public void setGameState(GameState gameState) {
+    public void setGameState(GameStatePlaying gameState) {
         this.gameState = gameState;
     }
 
@@ -148,15 +149,15 @@ public class Model {
 
 
 
-    public void switchPlayer(){
-        var player = getCurrentPlayer();
-        if (getGameState()==PLAYING && player.equals(CIRCLE)){
-            setCurrentPlayer(CROSS);
-        } else if (getGameState()==PLAYING && player.equals(CROSS)) {
-            setCurrentPlayer(CIRCLE);
-
-        }
-    }
+//    public void switchPlayer(){
+//        var player = getCurrentPlayer();
+//        if (getGameState()==PLAYING && player.equals(CIRCLE)){
+//            setCurrentPlayer(CROSS);
+//        } else if (getGameState()==PLAYING && player.equals(CROSS)) {
+//            setCurrentPlayer(CIRCLE);
+//
+//        }
+//    }
 
     public void playerSelected(PlayerToken token, Button button) {
         if (players.size() < NUMBER_OF_PLAYERS) {
@@ -246,28 +247,28 @@ public class Model {
         return gameResults.diagonalWinner(token) || gameResults.rowWinner(token) || gameResults.columnWinner(token) || gameResults.invertedDiagonalWinner(token);
     }
 
-    public void updateGameBoard(Player move){
+//    public void updateGameBoard(SquaredMatrixCoordinates coordinates){
+//        Player move = Player.valueOf(coordinates, getCurrentPlayer());
+//
+//        int imageIndexPlayed = move.getLinearRepresentation();
+//        var boardTile = gameResults.getPlayers().get(imageIndexPlayed);
+//        var imageToUpdateBoard = getImageForPlayer();
+//
+//        if(boardTile.token()== EMPTY){
+//            gameResults.addPlayer(move);
+//            images.set(imageIndexPlayed, imageToUpdateBoard);
+//            switchPlayer();
+//        };
+//
+//
+//    }
 
-        int imageIndexPlayed = move.getLinearRepresentation();
-        var boardTile = gameResults.getPlayers().get(imageIndexPlayed);
-        var imageToUpdateBoard = getImageForPlayer();
 
-        if(boardTile.token()== EMPTY){
-            gameResults.addPlayer(move);
-            images.set(imageIndexPlayed, imageToUpdateBoard);
-            switchPlayer();
-        };
-        System.out.println(images.size());
-
-
-    }
-
-
-    public void pickedGridCell(int row, int column) {
-        Player move = Player.of(row, column, getCurrentPlayer());
-        updateGameBoard(move);
-
-    }
+//    public void pickedGridCell(int row, int column) {
+//        Player move = Player.valueOf(row, column, getCurrentPlayer());
+//        updateGameBoard(move);
+//
+//    }
 
     public Image getImageForPlayer() {
         if (getCurrentPlayer().equals(CROSS) && getBoardState()==BoardState.PLAYER_VS_COMPUTER)

@@ -3,7 +3,7 @@ package org.example.tictactoe.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameResults implements GameOutcomes {
+public class GameResults implements GameDeterminable {
     private int matrixLength;
     final private List<Player> players;
 
@@ -32,7 +32,7 @@ public class GameResults implements GameOutcomes {
     public void initializeGameBoard() {
         List<Player> emptyBoard = new ArrayList<>();
         for (int i = 0; i < (matrixLength*matrixLength); i++) {
-            emptyBoard.add(i, Player.of(i/matrixLength, i%matrixLength, PlayerToken.EMPTY));
+            emptyBoard.add(i, Player.valueOf(i/matrixLength, i%matrixLength, PlayerToken.EMPTY));
 
         }
         this.players.addAll(emptyBoard);

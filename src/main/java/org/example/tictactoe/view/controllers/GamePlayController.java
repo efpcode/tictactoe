@@ -7,10 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import org.example.tictactoe.model.BoardState;
-import org.example.tictactoe.model.GameState;
-import org.example.tictactoe.model.Model;
-import org.example.tictactoe.model.PlayerToken;
+import org.example.tictactoe.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +100,7 @@ public class GamePlayController  {
         Button button = (Button) mouseEvent.getSource();
         model.updateStartButtonText(button);
         model.startGame();
-        if (model.getGameState() == GameState.PLAYING){
+        if (model.getGameState() == GameStatePlaying.PLAYING){
             leftButton.setDisable(false);
             rightButton.setDisable(false);
         }
@@ -112,7 +109,7 @@ public class GamePlayController  {
 
 
     public void getImage(MouseEvent mouseEvent) {
-        if(model.getGameState() == GameState.PLAYING) {
+        if(model.getGameState() == GameStatePlaying.PLAYING) {
             ImageView tileImage = (ImageView) mouseEvent.getSource();
             var rowAndColumn = getGridCoordinates(tileImage.getId());
             model.pickedGridCell(rowAndColumn.getFirst(), rowAndColumn.getLast());
@@ -120,21 +117,19 @@ public class GamePlayController  {
 
     }
 
-    public List<Integer> getGridCoordinates(String imageName) {
-        List<Integer> coordinates = new ArrayList<>(2);
-        switch (imageName) {
-            case "image0" -> coordinates.addAll(List.of(0, 0));
-            case "image1" -> coordinates.addAll(List.of(0, 1));
-            case "image2" -> coordinates.addAll(List.of(0, 2));
-            case "image3" -> coordinates.addAll(List.of(1, 0));
-            case "image4" -> coordinates.addAll(List.of(1, 1));
-            case "image5" -> coordinates.addAll(List.of(1, 2));
-            case "image6" -> coordinates.addAll(List.of(2, 0));
-            case "image7" -> coordinates.addAll(List.of(2, 1));
-            case "image8" -> coordinates.addAll(List.of(2, 2));
-        }
-
-        return coordinates;
+    public SquaredMatrixCoordinates getGridCoordinates(String imageName) {
+       return switch (imageName) {
+            case "image0" -> new SquaredMatrixCoordinates(0, 0);
+            case "image1" -> new SquaredMatrixCoordinates(0, 1);
+            case "image2" -> new SquaredMatrixCoordinates(0, 2);
+            case "image3" -> new SquaredMatrixCoordinates(1, 0);
+            case "image4" -> new SquaredMatrixCoordinates(1, 1);
+            case "image5" -> new SquaredMatrixCoordinates(1, 2);
+            case "image6" -> new SquaredMatrixCoordinates(2, 0);
+            case "image7" -> new SquaredMatrixCoordinates(2, 1);
+            case "image8" -> new SquaredMatrixCoordinates(2, 2);
+           case null, default -> throw new IllegalStateException("Unexpected value: " + imageName);
+        };
 
     }
 }
