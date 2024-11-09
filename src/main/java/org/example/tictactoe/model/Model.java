@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.example.tictactoe.model.GameState.*;
 
@@ -77,6 +78,11 @@ public class Model {
 
     protected ListProperty<Image> images = new SimpleListProperty<>(FXCollections.observableArrayList());
     protected ListProperty<Button> buttons = new SimpleListProperty<>(FXCollections.observableArrayList());
+
+    public GameResults getGameResults() {
+        return gameResults;
+    }
+
     protected final GameResults gameResults = new GameResults();
 
     Image empty;
@@ -110,38 +116,25 @@ public class Model {
 
 
     public Model() {
-        empty = new Image(getClass().getResource("/org/example/tictactoe/images/empty.png").toExternalForm());
+        empty = new Image(getClass().getResource("/org/example/tictactoe/images/empty2.png").toExternalForm());
         robot = new Image(getClass().getResource("/org/example/tictactoe/images/robot.png").toExternalForm());
         cross = new Image(getClass().getResource("/org/example/tictactoe/images/cross.png").toExternalForm());
         circle = new Image(getClass().getResource("/org/example/tictactoe/images/circle.png").toExternalForm());
+        addAllImagesEmpty();
 
+    }
+
+    private void addAllImagesEmpty() {
         for (int i = 0; i < (MATRIX_SIDE_LENGTH * MATRIX_SIDE_LENGTH); i++) {
             images.add(empty);
 
         }
-
     }
-
-
-    public ObservableList<Button> getButtons() {
-        return buttons.get();
+    public void setAllImagesEmpty() {
+        for (int i = 0; i < (MATRIX_SIDE_LENGTH * MATRIX_SIDE_LENGTH); i++) {
+            images.set(i, empty);
+        }
     }
-
-
-    public ListProperty<Button> buttonsProperty() {
-        return buttons;
-    }
-
-
-    public void setButtons(ObservableList<Button> buttons) {
-        this.buttons.set(buttons);
-    }
-
-    public void addButton(int index, Button button) {
-        buttons.add(index, button);
-    }
-
-
 
 
     public String getRoundSPlayed() {
@@ -232,21 +225,71 @@ public class Model {
 
 
     public void playerSelected(PlayerToken token) {
-        if (players.size() <= NUMBER_OF_PLAYERS) {
+        if (players.size() < NUMBER_OF_PLAYERS) {
             players.add(token);
         }
-        if(players.size()== NUMBER_OF_PLAYERS) {
-            buttons.getFirst().setDisable(false);
-        }
+
     }
 
 
     public void playerYieldLost(PlayerToken token) {
         switch (token) {
-            case CIRCLE -> setCrossPoints("Score: " + ++scoreCross);
-            case CROSS -> setCirclePoints("Score: " + ++scoreCircle);
+            case PlayerToken.CIRCLE -> isWinner(WIN, PlayerToken.CIRCLE);
+            case PlayerToken.CROSS -> isWinner(WIN, PlayerToken.CROSS);
         }
 
+    }
+
+    public String updateBanner(GameState state, PlayerToken token) {
+        String prompt = "Winner is: ";
+
+        if(state.equals(WIN) && gameMode.getGameType().equals(PvsCPU)){
+           String winner = token.equals(PlayerToken.CROSS) ? "CPU":"CIRCLE";
+           prompt += winner;
+
+        } else if (state.equals(WIN) && gameMode.getGameType().equals(PvsP)) {
+            String winner = token.equals(PlayerToken.CROSS) ? "CROSS":"CIRCLE";
+            prompt += winner;
+        }
+        return prompt;
+
+    }
+
+    public void isWinner(GameState state, PlayerToken token){
+        if(state.equals(DRAW)){
+            updateBanner(DRAW);
+        } else if (state.equals(WIN)) {
+            var winner = updateBanner(state, token);
+            if(token.equals(PlayerToken.CROSS) && getGameState().equals(PLAY)){
+                scoreCross++;
+                setCrossPoints("Score: "+ scoreCross);
+            }else if(token.equals(PlayerToken.CIRCLE) && getGameState().equals(PLAY)) {
+                scoreCircle++;
+                setCirclePoints("Score: " + scoreCircle);
+            }
+            if(getGameState().equals(PLAY)){
+                roundCounter++;
+                setRoundSPlayed("Round: "+ roundCounter +" || " + winner);
+                setGameState(WIN);
+            }
+        }
+
+
+    }
+
+    public void updateBanner(){
+        String banner = roundSPlayed.get();
+        String [] neturalBanner = banner.split("\\|");
+        setRoundSPlayed(neturalBanner[0]);
+    }
+
+    public void updateBanner(GameState state){
+        if(state.equals(DRAW) && getGameState().equals(PLAY)){
+            roundCounter++;
+            setRoundSPlayed("Round: " + roundCounter+" || "+ "DRAW");
+            setGameState(DRAW);
+
+        }
     }
 
 
@@ -269,6 +312,21 @@ public class Model {
             case PLAY -> setGameState(PAUSE);
         }
 
+
+    }
+
+    public void playerMove(SquaredMatrixCoordinates coordinates) {
+        var previousPlayer = getCurrentPlayer();
+        getGameMode().move(coordinates);
+
+        if (detectWinner(previousPlayer)) {
+            isWinner(WIN, previousPlayer);
+
+
+        } else if (detectDraw()) {
+            updateBanner(DRAW);
+
+        }
 
     }
 

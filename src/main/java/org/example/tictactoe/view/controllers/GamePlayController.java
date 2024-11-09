@@ -6,8 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -25,14 +25,15 @@ public class GamePlayController  {
     public Button startButton;
     public Button rightButton;
     public Button leftButton;
+    public Button PvPfx;
+    public Button PvCPUfx;
+    public Label labelCircle;
+    public Label labelCross;
     @FXML private VBox rightPane;
     @FXML private VBox leftPane;
     @FXML private GridPane centerPane;
-    private GamePlayController gamePlayController;
     private final List<Node> nodes = new ArrayList<>();
-
     private Model model = new Model();
-
     public Model getModel() {
         return model;
     }
@@ -42,28 +43,30 @@ public class GamePlayController  {
         nodes.add(leftPane);
         nodes.add(centerPane);
         startButton.setDisable(true);
-        model.addButton(0, startButton);
-        model.addButton(1, rightButton);
-        model.addButton(2, leftButton);
-        BoardPaneHider(nodes);
+        boardPaneHider(nodes);
+        gameLoop();
 
 
     }
 
-
-    private void startRandomEvent() {
-        Timeline timeLine = new Timeline(
-                new KeyFrame(
-                        Duration.millis(Math.random() * 1000),
+    private void gameLoop() {
+        Timeline timeline = new Timeline(
+                new KeyFrame(Duration.millis(Math.random()*3000),
                         (ActionEvent event) -> {
-                            GamePlayController.this.clickAtCenterPosition(nodes.getLast());
+
+                            if(model.getGameState().equals(PLAY) && model.getGameMode().getGameType().equals(PvsCPU) && model.getCurrentPlayer().equals(PlayerToken.CROSS)){
+                            var coordinates = getGridCoordinates("image4");
+                            model.playerMove(coordinates);
+                            labelHighlighter(model.getCurrentPlayer());
+
+                            }
+                            GamePlayController.this.gameLoop();
 
                         }
-                )
+                        )
         );
-        timeLine.play();
+        timeline.play();
     }
-
 
     public void quitGame() {
         System.exit(0);
@@ -72,13 +75,13 @@ public class GamePlayController  {
 
 
 
-    public void BoardPaneShower(List<Node> nodes) {
+    public void boardPaneShower(List<Node> nodes) {
         nodes.forEach(node -> {
             node.setVisible(true);
         });
     }
 
-    public void BoardPaneHider(List<Node> nodes) {
+    public void boardPaneHider(List<Node> nodes) {
         nodes.forEach(node -> {
             node.setVisible(false);
         });
@@ -88,74 +91,137 @@ public class GamePlayController  {
 
     public void gamePVP(MouseEvent mouseEvent) {
         getModel().setGameMode(GameModePvP.createGameModePvP(getModel()));
-        BoardPaneShower(nodes);
+        boardPaneShower(nodes);
+        PvCPUfx.setDisable(true);
 
 
 
     }
 
     public void gamePVNPC(MouseEvent mouseEvent) {
+        boardPaneShower(nodes);
+        PvPfx.setDisable(true);
         getModel().setGameMode(GameModePvsCPU.createGameModePvsCPU(getModel()));
-        BoardPaneShower(nodes);
+        model.playerRightSelected(PlayerToken.CROSS);
+        model.playerLeftSelected(PlayerToken.CIRCLE);
+        disableButton(rightButton);
+        disableButton(leftButton);
+        leftButton.setVisible(false);
+        rightButton.setVisible(false);
+        enableStartButton();
     }
 
-    public void gameOnline(MouseEvent mouseEvent) {
+    public void gameRest(MouseEvent mouseEvent) {
+        model.getGameResults().removeAllPlayers();
+        model.setAllImagesEmpty();
+        model.updateBanner();
+        model.setGameState(PAUSE);
+        model.setStartButtonSelect("Play");
+        startButton.setDisable(false);
+        enableButton(leftButton);
+        enableButton(rightButton);
 
-        BoardPaneShower(nodes);
+
+
+
+
+
     }
 
     public void playerSelectedLeft(MouseEvent mouseEvent) {
         model.playerLeftSelected(PlayerToken.CIRCLE);
+        enableStartButton();
+        disableButton(leftButton);
+        model.playerYieldLost(PlayerToken.CROSS);
+        playerSelectDisableOrEnable(leftButton);
+        playerSelectDisableOrEnable(rightButton);
     }
 
     public void playerSelectedRight(MouseEvent mouseEvent) {
       model.playerRightSelected(PlayerToken.CROSS);
+      enableStartButton();
+      disableButton(rightButton);
+      model.playerYieldLost(PlayerToken.CIRCLE);
+      playerSelectDisableOrEnable(rightButton);
+      playerSelectDisableOrEnable(leftButton);
+
+
+    }
+
+    public void playerSelectDisableOrEnable(Button button){
+        if(model.getGameState().equals(WIN) || model.getGameState().equals(DRAW))
+            disableButton(button);
+        else if(model.getGameState().equals(PLAY))
+            enableButton(button);
+
     }
 
     public void startButtonPressed(MouseEvent mouseEvent) {
         model.startGame();
         if (model.getGameState() == GameState.PLAY) {
-            leftButton.setDisable(false);
-            rightButton.setDisable(false);
+            labelHighlighter(model.getCurrentPlayer());
+
+            enableButton(leftButton);
+            enableButton(rightButton);
         }
 
     }
 
 
+    public Button getLeftButton() {
+        return leftButton;
+    }
 
+    public Button getRightButton() {
+        return rightButton;
+    }
 
-    public void clickAtCenterPosition(Node n) {
-        n.fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED,
-                n.getLayoutX(), n.getLayoutY(), n.getLayoutX(), n.getLayoutY(), MouseButton.PRIMARY, 1,
-                true, true, true, true, true, true, true, true, true, true, null));
+    public void enableStartButton() {
+        if (getRightButton().getText().equals("Yield") && getLeftButton().getText().equals("Yield")) {
+            startButton.setDisable(false);
+        }
+    }
 
-
+    public void disableButton(Button button) {
+        button.setDisable(true);
 
     }
 
-
-
-
+    public void enableButton(Button button) {
+        button.setDisable(false);
+    }
 
 
     public void getImage(MouseEvent mouseEvent) {
         if(model.getGameState() == PLAY) {
             ImageView tileImage = (ImageView) mouseEvent.getSource();
             var rowAndColumn = getGridCoordinates(tileImage.getId());
-            var previousPlayer = model.getCurrentPlayer();
-            model.getGameMode().move(rowAndColumn);
-            if (model.detectWinner(previousPlayer)) {
-                model.setGameState(WIN);
-                System.out.println(previousPlayer);
+            model.playerMove(rowAndColumn);
+            labelHighlighter(model.getCurrentPlayer());
 
-            } else if (model.detectDraw()) {
-                model.setGameState(DRAW);
-                System.out.println("DRAW");
-
-            }
         }
 
     }
+
+    public void labelHighlight(Label label) {
+        label.setStyle("-fx-effect: dropshadow(three-pass-box, darkcyan, 20, 0.68, 2,2) ");
+    }
+
+    public void labelDeHighlight(Label label) {
+        label.setStyle("-fx-background-color: none;");
+    }
+
+    public void labelHighlighter(PlayerToken playerToken) {
+        if(playerToken == PlayerToken.CROSS) {
+            labelHighlight(labelCross);
+            labelDeHighlight(labelCircle);
+        }else if(playerToken == PlayerToken.CIRCLE){
+            labelHighlight(labelCircle);
+            labelDeHighlight(labelCross);
+        }
+    }
+
+
 
     public SquaredMatrixCoordinates getGridCoordinates(String imageName) {
        return switch (imageName) {

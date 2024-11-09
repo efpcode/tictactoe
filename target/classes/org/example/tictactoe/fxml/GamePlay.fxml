@@ -13,17 +13,17 @@
         </padding>
 
         <top>
-            <VBox alignment="TOP_CENTER" maxHeight="180.0" minHeight="150.0" style="-fx-border-color: red" BorderPane.alignment="CENTER">
+            <VBox alignment="TOP_CENTER" maxHeight="180.0" minHeight="150.0" style="-fx-border-color: none" BorderPane.alignment="CENTER">
                 <Label id="menuTitle" text="Welcome To TicTacToe" />
                 <TilePane>
                     <Button id="Quit" alignment="TOP_LEFT" onMouseClicked="#quitGame" styleClass="menuButtons" text="Quit" BorderPane.alignment="TOP_LEFT" />
-                    <Button id="PvP" alignment="TOP_CENTER" onMouseClicked="#gamePVP" styleClass="menuButtons" text="Player Vs Player" BorderPane.alignment="TOP_CENTER" />
-                    <Button id="PvCPU" alignment="TOP_CENTER" onMouseClicked="#gamePVNPC" styleClass="menuButtons" text="Player Vs Computer" BorderPane.alignment="TOP_CENTER" />
-                    <Button id="GameOnline" alignment="TOP_RIGHT" onMouseClicked="#gameOnline" styleClass="menuButtons" text="Play Online" BorderPane.alignment="TOP_RIGHT" />
+                    <Button id="PvP" fx:id="PvPfx" alignment="TOP_CENTER" onMouseClicked="#gamePVP" styleClass="menuButtons" text="Player Vs Player" BorderPane.alignment="TOP_CENTER" />
+                    <Button id="PvCPU" fx:id="PvCPUfx" alignment="TOP_CENTER" onMouseClicked="#gamePVNPC" styleClass="menuButtons" text="Player Vs Computer" BorderPane.alignment="TOP_CENTER" />
+                    <Button id="GameReset" alignment="TOP_RIGHT" onMouseClicked="#gameRest" styleClass="menuButtons" text="Game Reset" BorderPane.alignment="TOP_RIGHT" />
                 </TilePane>
 
                 <TilePane alignment="TOP_CENTER" BorderPane.alignment="TOP_CENTER">
-                    <Label alignment="TOP_CENTER" styleClass="roundDisplay" text="Round 0">
+                    <Label alignment="TOP_CENTER" styleClass="roundDisplay" text="${controller.model.roundSPlayed}">
                   <TilePane.margin>
                      <Insets />
                   </TilePane.margin></Label>
@@ -37,26 +37,26 @@
             </VBox>
         </top>
         <left>
-            <VBox fx:id="leftPane" alignment="CENTER_RIGHT" maxWidth="200.0" style="-fx-border-color: blue;" BorderPane.alignment="CENTER_RIGHT">
+            <VBox fx:id="leftPane" alignment="CENTER_RIGHT" maxWidth="200.0" style="-fx-border-color: none;" BorderPane.alignment="CENTER_RIGHT">
 
 
-                <Label styleClass="playerToken" text="o" />
+                <Label fx:id="labelCircle" styleClass="playerToken" text="o" />
                 <Label styleClass="scoreStyle" text="${controller.model.circlePoints}" />
                 <Button fx:id="leftButton" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#playerSelectedLeft" styleClass="playerSelectButton" text="${controller.model.circleSelect}" />
             </VBox>
         </left>
         <right>
-            <VBox fx:id="rightPane" alignment="CENTER_LEFT" maxWidth="200.0" minWidth="100.0" style="-fx-border-color: magenta;" BorderPane.alignment="CENTER_LEFT">
+            <VBox fx:id="rightPane" alignment="CENTER_LEFT" maxWidth="200.0" minWidth="100.0" style="-fx-border-color: none;" BorderPane.alignment="CENTER_LEFT">
 
 
-                <Label styleClass="playerToken" text="x" />
+                <Label fx:id="labelCross" styleClass="playerToken" text="x" />
                 <Label styleClass="scoreStyle" text="${controller.model.crossPoints}" />
                 <Button fx:id="rightButton" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#playerSelectedRight" styleClass="playerSelectButton" text="${controller.model.crossSelect}" />
 
             </VBox>
         </right>
         <center>
-            <GridPane id="cssCenterPane" fx:id="centerPane" alignment="CENTER" hgap="20" style="-fx-border-color: green;" vgap="20">
+            <GridPane id="cssCenterPane" fx:id="centerPane" alignment="CENTER" hgap="20" style="-fx-border-color: none;" vgap="20">
 
                 <ImageView id="image0" image="${controller.model.images[0]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
                 <ImageView id="image1" image="${controller.model.images[1]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
@@ -80,7 +80,7 @@
             </GridPane>
         </center>
         <bottom>
-            <HBox alignment="CENTER" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER" style="-fx-border-color: none;" BorderPane.alignment="CENTER">
 
                 <TilePane alignment="CENTER" focusTraversable="true" BorderPane.alignment="CENTER">
                     <Button fx:id="startButton" onMouseClicked="#startButtonPressed" styleClass="menuButtons" text="${controller.model.startButtonSelect}" />
