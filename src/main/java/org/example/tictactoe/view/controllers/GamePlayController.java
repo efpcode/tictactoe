@@ -1,19 +1,23 @@
 package org.example.tictactoe.view.controllers;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 import org.example.tictactoe.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import static org.example.tictactoe.model.BoardState.*;
+import static org.example.tictactoe.model.GameState.*;
 
 public class GamePlayController  {
 
@@ -24,6 +28,7 @@ public class GamePlayController  {
     @FXML private VBox rightPane;
     @FXML private VBox leftPane;
     @FXML private GridPane centerPane;
+    private GamePlayController gamePlayController;
     private final List<Node> nodes = new ArrayList<>();
 
     private Model model = new Model();
@@ -37,7 +42,26 @@ public class GamePlayController  {
         nodes.add(leftPane);
         nodes.add(centerPane);
         startButton.setDisable(true);
+        model.addButton(0, startButton);
+        model.addButton(1, rightButton);
+        model.addButton(2, leftButton);
         BoardPaneHider(nodes);
+
+
+    }
+
+
+    private void startRandomEvent() {
+        Timeline timeLine = new Timeline(
+                new KeyFrame(
+                        Duration.millis(Math.random() * 1000),
+                        (ActionEvent event) -> {
+                            GamePlayController.this.clickAtCenterPosition(nodes.getLast());
+
+                        }
+                )
+        );
+        timeLine.play();
     }
 
 
@@ -46,11 +70,7 @@ public class GamePlayController  {
 
     }
 
-    public void RightPaneButtonEnabledOrDisabled(Button button, BoardState boardState) {
-        if (Objects.requireNonNull(boardState) == BoardState.PLAYER_VS_COMPUTER || boardState == BoardState.ONLINE_PLAY || button.getText().equals("Yield"))
-            button.setDisable(true);
-        button.setDisable(false);
-    }
+
 
     public void BoardPaneShower(List<Node> nodes) {
         nodes.forEach(node -> {
@@ -67,40 +87,34 @@ public class GamePlayController  {
 
 
     public void gamePVP(MouseEvent mouseEvent) {
-        model.setBoardState(PLAYER_VS_PLAYER);
-        RightPaneButtonEnabledOrDisabled(rightButton, PLAYER_VS_PLAYER);
+        getModel().setGameMode(GameModePvP.createGameModePvP(getModel()));
         BoardPaneShower(nodes);
+
+
 
     }
 
     public void gamePVNPC(MouseEvent mouseEvent) {
-        model.setBoardState(PLAYER_VS_COMPUTER);
-        RightPaneButtonEnabledOrDisabled(rightButton, PLAYER_VS_COMPUTER);
-        model.playerSelected(PlayerToken.CROSS, rightButton);
+        getModel().setGameMode(GameModePvsCPU.createGameModePvsCPU(getModel()));
         BoardPaneShower(nodes);
     }
 
     public void gameOnline(MouseEvent mouseEvent) {
-        model.setBoardState(ONLINE_PLAY);
-        RightPaneButtonEnabledOrDisabled(rightButton, ONLINE_PLAY);
+
         BoardPaneShower(nodes);
     }
 
     public void playerSelectedLeft(MouseEvent mouseEvent) {
-        model.playerLeftSelected(mouseEvent);
-        model.enableStartButton(startButton);
+        model.playerLeftSelected(PlayerToken.CIRCLE);
     }
 
     public void playerSelectedRight(MouseEvent mouseEvent) {
-        model.playerRightSelected(mouseEvent);
-        model.enableStartButton(startButton);
+      model.playerRightSelected(PlayerToken.CROSS);
     }
 
     public void startButtonPressed(MouseEvent mouseEvent) {
-        Button button = (Button) mouseEvent.getSource();
-        model.updateStartButtonText(button);
         model.startGame();
-        if (model.getGameState() == GameStatePlaying.PLAYING){
+        if (model.getGameState() == GameState.PLAY) {
             leftButton.setDisable(false);
             rightButton.setDisable(false);
         }
@@ -108,11 +122,37 @@ public class GamePlayController  {
     }
 
 
+
+
+    public void clickAtCenterPosition(Node n) {
+        n.fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED,
+                n.getLayoutX(), n.getLayoutY(), n.getLayoutX(), n.getLayoutY(), MouseButton.PRIMARY, 1,
+                true, true, true, true, true, true, true, true, true, true, null));
+
+
+
+    }
+
+
+
+
+
+
     public void getImage(MouseEvent mouseEvent) {
-        if(model.getGameState() == GameStatePlaying.PLAYING) {
+        if(model.getGameState() == PLAY) {
             ImageView tileImage = (ImageView) mouseEvent.getSource();
             var rowAndColumn = getGridCoordinates(tileImage.getId());
-            model.pickedGridCell(rowAndColumn.getFirst(), rowAndColumn.getLast());
+            var previousPlayer = model.getCurrentPlayer();
+            model.getGameMode().move(rowAndColumn);
+            if (model.detectWinner(previousPlayer)) {
+                model.setGameState(WIN);
+                System.out.println(previousPlayer);
+
+            } else if (model.detectDraw()) {
+                model.setGameState(DRAW);
+                System.out.println("DRAW");
+
+            }
         }
 
     }

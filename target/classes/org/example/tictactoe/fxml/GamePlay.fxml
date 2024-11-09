@@ -42,7 +42,7 @@
 
                 <Label styleClass="playerToken" text="o" />
                 <Label styleClass="scoreStyle" text="${controller.model.circlePoints}" />
-                <Button fx:id="leftButton" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#playerSelectedLeft" styleClass="playerSelectButton" text="Select" />
+                <Button fx:id="leftButton" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#playerSelectedLeft" styleClass="playerSelectButton" text="${controller.model.circleSelect}" />
             </VBox>
         </left>
         <right>
@@ -51,7 +51,7 @@
 
                 <Label styleClass="playerToken" text="x" />
                 <Label styleClass="scoreStyle" text="${controller.model.crossPoints}" />
-                <Button fx:id="rightButton" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#playerSelectedRight" styleClass="playerSelectButton" text="Select" />
+                <Button fx:id="rightButton" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#playerSelectedRight" styleClass="playerSelectButton" text="${controller.model.crossSelect}" />
 
             </VBox>
         </right>
@@ -83,7 +83,7 @@
             <HBox alignment="CENTER" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
 
                 <TilePane alignment="CENTER" focusTraversable="true" BorderPane.alignment="CENTER">
-                    <Button fx:id="startButton" onMouseClicked="#startButtonPressed" styleClass="menuButtons" text="Start" />
+                    <Button fx:id="startButton" onMouseClicked="#startButtonPressed" styleClass="menuButtons" text="${controller.model.startButtonSelect}" />
                 </TilePane>
             </HBox>
         </bottom>

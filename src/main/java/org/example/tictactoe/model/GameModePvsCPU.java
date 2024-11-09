@@ -2,14 +2,19 @@ package org.example.tictactoe.model;
 
 import javafx.scene.image.Image;
 
+import java.util.Random;
+
 import static org.example.tictactoe.model.GameState.*;
 import static org.example.tictactoe.model.PlayerToken.*;
 
-public class GameModePvP implements GameModable {
+public class GameModePvsCPU implements GameModable {
 
 
-    private final GameState isType = PvsP;
+    protected final GameState isType = PvsCPU;
+    private Random random = new Random();
     private Model model;
+
+
 
     public Model getModel() {
         return model;
@@ -17,28 +22,40 @@ public class GameModePvP implements GameModable {
 
     public void setModel(Model model) {
         this.model = model;
-    }
-
-
-
-    public GameModePvP (Model model) {
-         this.model = model;
 
     }
 
-    public static GameModePvP createGameModePvP(Model model) {
-        return new GameModePvP(model);
+
+    public GameModePvsCPU(Model model) {
+        this.model = model;
+
+    }
+
+    public static GameModePvsCPU createGameModePvsCPU(Model model) {
+        return new GameModePvsCPU(model);
+    }
+
+    public SquaredMatrixCoordinates cpuMove() {
+        var availablePositions = model.gameResults.availablePositions();
+        var positionIndex = random.nextInt(availablePositions.size());
+        var position = availablePositions.get(positionIndex);
+        return new SquaredMatrixCoordinates(position.row(), position.column());
+
+
     }
 
     @Override
     public void move(SquaredMatrixCoordinates coordinates) {
+        if (model.getCurrentPlayer().equals(CROSS)) {
+            coordinates = cpuMove();
+        }
         Player playerMove = Player.valueOf(coordinates, model.getCurrentPlayer());
-        if(model.getGameState() == PLAY ) {
+        if (model.getGameState().equals(PLAY)) {
             int imageIndexPlayed = playerMove.getLinearRepresentation();
             var boardTile = model.gameResults.getPlayers().get(imageIndexPlayed);
             var imageToUpdateBoard = getImageForPlayer();
 
-            if (boardTile.token() == EMPTY) {
+            if (boardTile.token().equals(EMPTY)) {
                 model.gameResults.addPlayer(playerMove);
                 model.images.set(imageIndexPlayed, imageToUpdateBoard);
                 this.switchPlayer();
@@ -47,22 +64,22 @@ public class GameModePvP implements GameModable {
         }
     }
 
+
     @Override
     public void switchPlayer() {
         switch (model.getCurrentPlayer()) {
             case CIRCLE -> model.setCurrentPlayer(CROSS);
             case CROSS -> model.setCurrentPlayer(CIRCLE);
-
         }
 
     }
 
     @Override
     public Image getImageForPlayer() {
-       return switch (model.getCurrentPlayer()) {
-            case CROSS -> model.cross;
+        return switch (model.getCurrentPlayer()) {
+            case CROSS -> model.robot;
             case CIRCLE -> model.circle;
-            case EMPTY ->  model.empty;
+            case EMPTY -> model.empty;
         };
     }
 
@@ -70,4 +87,6 @@ public class GameModePvP implements GameModable {
     public GameState getGameType() {
         return isType;
     }
+
+
 }

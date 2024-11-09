@@ -44,6 +44,12 @@ public class GameResults implements GameDeterminable {
         return outcome == (int)(matrixLength * matrixLength);
     }
 
+    public List<Player> availablePositions() {
+        return getPlayers().stream().
+                filter(player -> player.token().equals(PlayerToken.EMPTY))
+                .toList();
+    }
+
 
     public void removePlayer(Player player) {
         int index = player.getLinearRepresentation();
