@@ -37,6 +37,10 @@ public class GameModePvsCPU implements GameModable {
 
     public SquaredMatrixCoordinates cpuMove() {
         var availablePositions = model.gameResults.availablePositions();
+        if (availablePositions.isEmpty()) {
+            model.setGameState(DRAW);
+            return new SquaredMatrixCoordinates(0, 0);
+        }
         var positionIndex = random.nextInt(availablePositions.size());
         if (model.gameResults.isGameBoardEmpty())
             positionIndex = 4;

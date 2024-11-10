@@ -116,7 +116,7 @@ public class GamePlayController  {
         model.setAllImagesEmpty();
         model.updateBanner();
         model.setGameState(PAUSE);
-        model.setStartButtonSelect("Play");
+        model.setStartButtonSelect("Start");
         startButton.setDisable(false);
         enableButton(leftButton);
         enableButton(rightButton);

@@ -21,7 +21,7 @@ public class Model {
 
     private GameState gameState = PAUSE;
     private PlayerToken currentPlayer;
-    private Set<PlayerToken> players = new HashSet<>();
+    private List<PlayerToken> players = new ArrayList<>();
     private Random random = new Random();
     private GameModable gameMode;
 
@@ -77,7 +77,6 @@ public class Model {
     private StringProperty circlePoints = new SimpleStringProperty("Score: 0");
 
     protected ListProperty<Image> images = new SimpleListProperty<>(FXCollections.observableArrayList());
-    protected ListProperty<Button> buttons = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     public GameResults getGameResults() {
         return gameResults;
@@ -112,6 +111,20 @@ public class Model {
 
     public void setImages(ObservableList<Image> images) {
         this.images.set(images);
+    }
+
+    public Model(Random random){
+        this.random = random;
+        empty = new Image(getClass().getResource("/org/example/tictactoe/images/test.png").toExternalForm());
+        robot = new Image(getClass().getResource("/org/example/tictactoe/images/test.png").toExternalForm());
+        cross = new Image(getClass().getResource("/org/example/tictactoe/images/test.png").toExternalForm());
+        circle = new Image(getClass().getResource("/org/example/tictactoe/images/test.png").toExternalForm());
+
+        for (int i = 0; i < MATRIX_SIDE_LENGTH*MATRIX_SIDE_LENGTH ; i++) {
+            images.add(empty);
+
+        }
+
     }
 
 
@@ -154,7 +167,8 @@ public class Model {
 
     public void randomFirstMover() {
         int indexRandom = random.nextInt(NUMBER_OF_PLAYERS);
-        setCurrentPlayer(players.stream().toList().get(indexRandom));
+
+        setCurrentPlayer(players.get(indexRandom));
 
     }
 
@@ -350,6 +364,7 @@ public class Model {
         gameResults.initializeGameBoard();
         if (gameResults.isGameBoardEmpty()) {
             randomFirstMover();
+
         }
     }
 
