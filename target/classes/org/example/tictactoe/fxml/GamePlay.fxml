@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane stylesheets="@../css/gamePlay.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.tictactoe.view.controllers.GamePlayController">
+
+    <BorderPane layoutX="-7.0" layoutY="7.0" maxHeight="960.0" maxWidth="960.0" minHeight="800.0" minWidth="800.0">
+        <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+        </padding>
+
+        <top>
+            <VBox alignment="TOP_CENTER" maxHeight="180.0" minHeight="150.0" style="-fx-border-color: none" BorderPane.alignment="CENTER">
+                <Label id="menuTitle" text="Welcome To TicTacToe" />
+                <TilePane>
+                    <Button id="Quit" alignment="TOP_LEFT" onMouseClicked="#quitGame" styleClass="menuButtons" text="Quit" BorderPane.alignment="TOP_LEFT" />
+                    <Button id="PvP" fx:id="PvPfx" alignment="TOP_CENTER" onMouseClicked="#gamePVP" styleClass="menuButtons" text="Player Vs Player" BorderPane.alignment="TOP_CENTER" />
+                    <Button id="PvCPU" fx:id="PvCPUfx" alignment="TOP_CENTER" onMouseClicked="#gamePVNPC" styleClass="menuButtons" text="Player Vs Computer" BorderPane.alignment="TOP_CENTER" />
+                    <Button id="GameReset" alignment="TOP_RIGHT" onMouseClicked="#gameRest" styleClass="menuButtons" text="Game Reset" BorderPane.alignment="TOP_RIGHT" />
+                </TilePane>
+
+                <TilePane alignment="TOP_CENTER" BorderPane.alignment="TOP_CENTER">
+                    <Label alignment="TOP_CENTER" styleClass="roundDisplay" text="${controller.model.roundSPlayed}">
+                  <TilePane.margin>
+                     <Insets />
+                  </TilePane.margin></Label>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+                </TilePane>
+            </VBox>
+        </top>
+        <left>
+            <VBox fx:id="leftPane" alignment="CENTER_RIGHT" maxWidth="200.0" style="-fx-border-color: none;" BorderPane.alignment="CENTER_RIGHT">
+
+
+                <Label fx:id="labelCircle" styleClass="playerToken" text="o" />
+                <Label styleClass="scoreStyle" text="${controller.model.circlePoints}" />
+                <Button fx:id="leftButton" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#playerSelectedLeft" styleClass="playerSelectButton" text="${controller.model.circleSelect}" />
+            </VBox>
+        </left>
+        <right>
+            <VBox fx:id="rightPane" alignment="CENTER_LEFT" maxWidth="200.0" minWidth="100.0" style="-fx-border-color: none;" BorderPane.alignment="CENTER_LEFT">
+
+
+                <Label fx:id="labelCross" styleClass="playerToken" text="x" />
+                <Label styleClass="scoreStyle" text="${controller.model.crossPoints}" />
+                <Button fx:id="rightButton" alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#playerSelectedRight" styleClass="playerSelectButton" text="${controller.model.crossSelect}" />
+
+            </VBox>
+        </right>
+        <center>
+            <GridPane id="cssCenterPane" fx:id="centerPane" alignment="CENTER" hgap="20" style="-fx-border-color: none;" vgap="20">
+
+                <ImageView id="image0" image="${controller.model.images[0]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                <ImageView id="image1" image="${controller.model.images[1]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                <ImageView id="image2" image="${controller.model.images[2]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                <ImageView id="image3" image="${controller.model.images[3]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                <ImageView id="image4" image="${controller.model.images[4]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                <ImageView id="image5" image="${controller.model.images[5]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                <ImageView id="image6" image="${controller.model.images[6]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                <ImageView id="image7" image="${controller.model.images[7]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                <ImageView id="image8" image="${controller.model.images[8]}" onMouseClicked="#getImage" pickOnBounds="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="Infinity" prefWidth="100" />
+                    <ColumnConstraints percentWidth="Infinity" prefWidth="100" />
+                    <ColumnConstraints percentWidth="Infinity" prefWidth="100" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints percentHeight="Infinity" prefHeight="100" />
+                    <RowConstraints percentHeight="Infinity" prefHeight="100" />
+                    <RowConstraints percentHeight="Infinity" prefHeight="100" />
+                </rowConstraints>
+            </GridPane>
+        </center>
+        <bottom>
+            <HBox alignment="CENTER" style="-fx-border-color: none;" BorderPane.alignment="CENTER">
+
+                <TilePane alignment="CENTER" focusTraversable="true" BorderPane.alignment="CENTER">
+                    <Button fx:id="startButton" onMouseClicked="#startButtonPressed" styleClass="menuButtons" text="${controller.model.startButtonSelect}" />
+                </TilePane>
+            </HBox>
+        </bottom>
+    </BorderPane>
+</Pane>
