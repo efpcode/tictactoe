@@ -8,6 +8,7 @@ Since the code here is plain Java  you need to compile the code in local machine
 Java compiler and Java Virtual Machine is need on your system.
 
 Download source with the following command:
+
 ```git clone https://github.com/efpcode/tictactoe.github```
 
 ## Assests Needed
