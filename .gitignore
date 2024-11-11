@@ -153,8 +153,10 @@ Temporary Items
 **/images
 
 ## Ignore Maven target
-
+target/
 **/target/*
+**/target
+**/targ/
 
 
 
