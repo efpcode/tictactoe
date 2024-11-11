@@ -26,4 +26,4 @@ The directory need to have the following files:
 
 The file test.png is only need to run the test suite.
 
-**Thank you for the read :-) .**
+**Thank you for the read and time :-) .**
