@@ -11,8 +11,9 @@ Download source with the following command:
 
 ```git clone https://github.com/efpcode/tictactoe.github```
 
-## Assests Needed
+## Assets Needed
 Please navigate add the following directory to path below:
+
   * ```src/main/resources/org/example/tictactoe/```
 
 Directory must be named ``images``
@@ -27,6 +28,3 @@ The directory need to have the following files:
 The file test.png is only need to run the test suite.
 
 Thank you for the read :-).
-
-
-
