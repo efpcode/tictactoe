@@ -154,7 +154,7 @@ Temporary Items
 
 ## Ignore Maven target
 
-**/target
+**/target/*
 
 
 
